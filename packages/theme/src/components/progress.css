@@ -1,0 +1,176 @@
+/* ============================================================
+   Synu — Progress, Skeleton, Spinner
+   ============================================================ */
+
+/* ── Progress Bar ───────────────────────────────────────────── */
+
+.synu-progress-root { width: 100%; }
+
+.synu-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--synu-spacing-2);
+  gap: var(--synu-spacing-2);
+}
+.synu-progress-label-text {
+  font-size: var(--synu-font-size-sm);
+  font-weight: var(--synu-font-weight-medium);
+  color: var(--synu-text-primary);
+}
+.synu-progress-label-value {
+  font-size: var(--synu-font-size-xs);
+  color: var(--synu-text-secondary);
+  font-weight: var(--synu-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.synu-progress-track {
+  width: 100%;
+  background: var(--synu-color-neutral-200);
+  border-radius: var(--synu-radius-full);
+  overflow: hidden;
+  height: 8px;
+}
+.synu-progress-track--sm { height: 4px; }
+.synu-progress-track--lg { height: 12px; }
+
+.synu-progress-fill {
+  height: 100%;
+  background: var(--synu-color-primary);
+  border-radius: var(--synu-radius-full);
+  transition: width var(--synu-duration-slow) var(--synu-ease-out);
+  transform-origin: left;
+}
+.synu-progress-fill--success { background: var(--synu-color-success); }
+.synu-progress-fill--warning { background: var(--synu-color-warning); }
+.synu-progress-fill--error   { background: var(--synu-color-error); }
+
+.synu-progress-fill--indeterminate {
+  width: 40% !important;
+  animation: synu-progress-indeterminate 1.6s var(--synu-ease-in-out) infinite;
+}
+
+@keyframes synu-progress-indeterminate {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(400%); }
+}
+
+/* ── Circular Progress ──────────────────────────────────────── */
+
+.synu-progress-circular {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.synu-progress-circular svg {
+  transform: rotate(-90deg);
+}
+.synu-progress-circular__track {
+  fill: none;
+  stroke: var(--synu-color-neutral-200);
+  stroke-linecap: round;
+}
+.synu-progress-circular__fill {
+  fill: none;
+  stroke: var(--synu-color-primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--synu-duration-slow) var(--synu-ease-out);
+}
+.synu-progress-circular__label {
+  position: absolute;
+  font-size: var(--synu-font-size-xs);
+  font-weight: var(--synu-font-weight-semibold);
+  color: var(--synu-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Skeleton ───────────────────────────────────────────────── */
+
+.synu-skeleton {
+  display: block;
+  background: var(--synu-color-neutral-200);
+  border-radius: var(--synu-radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.synu-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: synu-skeleton-wave 1.8s linear infinite;
+}
+
+[data-theme="dark"] .synu-skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+}
+
+.synu-skeleton--text {
+  height: 1em;
+  border-radius: var(--synu-radius-sm);
+}
+.synu-skeleton--circle {
+  border-radius: var(--synu-radius-full);
+}
+.synu-skeleton--rect {
+  border-radius: var(--synu-radius-md);
+}
+
+@keyframes synu-skeleton-wave {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Spinner ────────────────────────────────────────────────── */
+
+.synu-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--synu-color-neutral-200);
+  border-top-color: var(--synu-color-primary);
+  border-radius: var(--synu-radius-full);
+  animation: synu-spin var(--synu-duration-slow) linear infinite;
+  flex-shrink: 0;
+}
+.synu-spinner--sm { width: 14px; height: 14px; border-width: 2px; }
+.synu-spinner--lg { width: 32px; height: 32px; border-width: 3px; }
+.synu-spinner--xl { width: 48px; height: 48px; border-width: 4px; }
+
+.synu-spinner--white {
+  border-color: rgb(255 255 255 / 0.3);
+  border-top-color: var(--synu-text-inverse);
+}
+.synu-spinner--muted {
+  border-color: var(--synu-color-neutral-200);
+  border-top-color: var(--synu-text-secondary);
+}
+
+@keyframes synu-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-progress-fill { transition: none; }
+  .synu-progress-circular__fill { transition: none; }
+  .synu-progress-fill--indeterminate { animation: none; width: 100% !important; }
+  .synu-skeleton::after { animation: none; }
+  .synu-spinner { animation-duration: 1.5s; }
+}

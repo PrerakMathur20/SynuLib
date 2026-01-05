@@ -1,0 +1,107 @@
+/* ============================================================
+   Synu — Switch (Toggle)
+   ============================================================ */
+
+.synu-switch-root {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--synu-spacing-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.synu-switch-root[data-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Track ──────────────────────────────────────────────────── */
+
+.synu-switch-track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  margin-top: 2px;
+  background: var(--synu-color-neutral-300);
+  border-radius: var(--synu-radius-full);
+  transition:
+    background var(--synu-duration-normal) var(--synu-ease-in-out),
+    box-shadow var(--synu-duration-fast) var(--synu-ease-out);
+  flex-shrink: 0;
+  outline: none;
+}
+
+.synu-switch-track:focus-visible {
+  box-shadow: 0 0 0 3px var(--synu-color-focus-ring);
+}
+
+.synu-switch-track[data-checked="true"] {
+  background: var(--synu-color-primary);
+}
+
+/* ── Thumb ──────────────────────────────────────────────────── */
+
+.synu-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--synu-radius-full);
+  background: var(--synu-text-inverse);
+  box-shadow: var(--synu-shadow-sm);
+  transition: transform var(--synu-duration-normal) var(--synu-ease-spring);
+  pointer-events: none;
+}
+
+.synu-switch-track[data-checked="true"] .synu-switch-thumb {
+  transform: translateX(20px);
+}
+
+/* ── Sizes ──────────────────────────────────────────────────── */
+
+.synu-switch-root--sm .synu-switch-track {
+  width: 32px;
+  height: 18px;
+}
+.synu-switch-root--sm .synu-switch-thumb {
+  width: 12px;
+  height: 12px;
+  top: 3px;
+  left: 3px;
+}
+.synu-switch-root--sm .synu-switch-track[data-checked="true"] .synu-switch-thumb {
+  transform: translateX(14px);
+}
+
+/* ── Label ──────────────────────────────────────────────────── */
+
+.synu-switch-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.synu-switch-label {
+  font-size: var(--synu-font-size-sm);
+  color: var(--synu-text-primary);
+  line-height: 1.5;
+  display: block;
+}
+
+.synu-switch-description {
+  font-size: var(--synu-font-size-xs);
+  color: var(--synu-text-tertiary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-switch-track,
+  .synu-switch-thumb {
+    transition: none;
+  }
+}
