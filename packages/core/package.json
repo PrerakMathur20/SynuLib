@@ -1,0 +1,41 @@
+{
+  "name": "@synu/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic headless primitives for Synu — state machines, accessibility, focus management",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.cjs.json && node ../../scripts/stamp-cjs.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "design-system",
+    "headless",
+    "accessibility",
+    "a11y",
+    "state-machine",
+    "synu",
+    "framework-agnostic"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "xstate": ">=5.0.0"
+  },
+  "devDependencies": {
+    "xstate": "^5.0.0"
+  }
+}
