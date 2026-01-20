@@ -1,0 +1,190 @@
+/* ============================================================
+   Synu — Avatar, Badge, Chip / Tag
+   ============================================================ */
+
+/* ── Avatar ─────────────────────────────────────────────────── */
+
+.synu-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--synu-radius-full);
+  background: var(--synu-color-primary-subtle);
+  color: var(--synu-color-primary);
+  font-weight: var(--synu-font-weight-semibold);
+  font-size: var(--synu-font-size-sm);
+  letter-spacing: var(--synu-letter-spacing-wide);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  user-select: none;
+}
+
+.synu-avatar--xs { width: 24px; height: 24px; font-size: 9px; }
+.synu-avatar--sm { width: 32px; height: 32px; font-size: var(--synu-font-size-xs); }
+.synu-avatar--lg { width: 48px; height: 48px; font-size: var(--synu-font-size-md); }
+.synu-avatar--xl { width: 64px; height: 64px; font-size: var(--synu-font-size-xl); }
+.synu-avatar--2xl { width: 80px; height: 80px; font-size: var(--synu-font-size-2xl); }
+
+.synu-avatar--square { border-radius: var(--synu-radius-md); }
+.synu-avatar--sm.synu-avatar--square  { border-radius: var(--synu-radius-sm); }
+.synu-avatar--lg.synu-avatar--square  { border-radius: var(--synu-radius-lg); }
+
+.synu-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Status indicator */
+.synu-avatar-status {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--synu-radius-full);
+  border: 2px solid var(--synu-color-background);
+  background: var(--synu-color-neutral-400);
+}
+.synu-avatar-status--online  { background: var(--synu-color-success); }
+.synu-avatar-status--away    { background: var(--synu-color-warning); }
+.synu-avatar-status--busy    { background: var(--synu-color-error); }
+
+/* Avatar Group */
+.synu-avatar-group {
+  display: flex;
+  align-items: center;
+}
+.synu-avatar-group .synu-avatar {
+  border: 2px solid var(--synu-color-background);
+  margin-left: -8px;
+}
+.synu-avatar-group .synu-avatar:first-child {
+  margin-left: 0;
+}
+.synu-avatar-group .synu-avatar-overflow {
+  background: var(--synu-color-neutral-200);
+  color: var(--synu-text-secondary);
+  font-size: var(--synu-font-size-xs);
+  font-weight: var(--synu-font-weight-semibold);
+  border: 2px solid var(--synu-color-background);
+  margin-left: -8px;
+}
+
+/* ── Badge ──────────────────────────────────────────────────── */
+
+.synu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--synu-spacing-1);
+  padding: 2px var(--synu-spacing-2);
+  font-size: var(--synu-font-size-xs);
+  font-weight: var(--synu-font-weight-medium);
+  line-height: 1.5;
+  border-radius: var(--synu-radius-full);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.synu-badge--default { background: var(--synu-color-neutral-100); color: var(--synu-text-secondary); }
+.synu-badge--primary { background: var(--synu-color-primary-subtle); color: var(--synu-color-primary); }
+.synu-badge--success { background: var(--synu-color-success-subtle); color: var(--synu-color-success); }
+.synu-badge--warning { background: var(--synu-color-warning-subtle); color: var(--synu-color-warning); }
+.synu-badge--error   { background: var(--synu-color-error-subtle);   color: var(--synu-color-error); }
+.synu-badge--info    { background: var(--synu-color-info-subtle);    color: var(--synu-color-info); }
+
+.synu-badge--solid-primary { background: var(--synu-color-primary); color: var(--synu-text-on-primary); }
+.synu-badge--solid-success { background: var(--synu-color-success); color: var(--synu-text-inverse); }
+.synu-badge--solid-warning { background: var(--synu-color-warning); color: var(--synu-color-neutral-900); }
+.synu-badge--solid-error   { background: var(--synu-color-error);   color: var(--synu-text-inverse); }
+
+.synu-badge--outline {
+  background: transparent;
+  border: 1px solid currentColor;
+}
+
+.synu-badge--dot::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--synu-radius-full);
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── Chip / Tag ─────────────────────────────────────────────── */
+
+.synu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--synu-spacing-1);
+  padding: var(--synu-spacing-1) var(--synu-spacing-3);
+  font-size: var(--synu-font-size-sm);
+  font-weight: var(--synu-font-weight-medium);
+  background: var(--synu-color-surface-hover);
+  color: var(--synu-text-primary);
+  border: 1px solid var(--synu-color-border);
+  border-radius: var(--synu-radius-full);
+  cursor: default;
+  user-select: none;
+  transition:
+    background var(--synu-duration-fast) var(--synu-ease-out),
+    border-color var(--synu-duration-fast) var(--synu-ease-out);
+  line-height: 1.5;
+}
+
+.synu-chip--clickable {
+  cursor: pointer;
+  outline: none;
+}
+.synu-chip--clickable:hover {
+  background: var(--synu-color-surface-active);
+  border-color: var(--synu-color-border-strong);
+}
+.synu-chip--clickable:focus-visible {
+  box-shadow: 0 0 0 3px var(--synu-color-focus-ring);
+}
+
+.synu-chip--selected {
+  background: var(--synu-color-primary-subtle);
+  color: var(--synu-color-primary);
+  border-color: var(--synu-color-primary);
+}
+.synu-chip--selected:hover {
+  background: var(--synu-color-primary-subtle);
+}
+
+.synu-chip__icon   { flex-shrink: 0; display: inline-flex; align-items: center; }
+.synu-chip__delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--synu-radius-full);
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity var(--synu-duration-fast) var(--synu-ease-out), background var(--synu-duration-fast) var(--synu-ease-out);
+  margin-right: -4px;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  padding: 0;
+}
+.synu-chip__delete:hover {
+  opacity: 1;
+  background: var(--synu-color-surface-active);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-chip { transition: none; }
+  .synu-chip__delete { transition: none; }
+}
