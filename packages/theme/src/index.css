@@ -1,0 +1,6 @@
+/* SYNU Theme — Full bundle */
+@import "./base/reset.css";
+@import "./base/variables.css";
+@import "./components/index.css";
+@import "./utilities/index.css";
+
