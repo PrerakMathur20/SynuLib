@@ -1,0 +1,9 @@
+tsconfig*.json
+*.config.js
+*.config.ts
+*.tsbuildinfo
+.turbo/
+**/__tests__/
+**/*.test.ts
+**/*.spec.ts
+
