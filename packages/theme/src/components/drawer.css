@@ -1,0 +1,154 @@
+/* ============================================================
+   Synu — Drawer (Side Sheet)
+   ============================================================ */
+
+/* ── Backdrop ───────────────────────────────────────────────── */
+
+.synu-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: var(--synu-z-modal);
+  animation: synu-backdrop-in var(--synu-duration-normal) var(--synu-ease-out);
+}
+
+/* ── Content ────────────────────────────────────────────────── */
+
+.synu-drawer-content {
+  position: fixed;
+  background: var(--synu-color-surface-overlay);
+  z-index: var(--synu-z-modal);
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  overflow: hidden;
+  box-shadow: var(--synu-shadow-2xl);
+}
+
+.synu-drawer-content--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  max-width: 90vw;
+  border-left: 1px solid var(--synu-color-border);
+  animation: synu-drawer-in-right var(--synu-duration-slow) var(--synu-ease-out);
+}
+.synu-drawer-content--left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 400px;
+  max-width: 90vw;
+  border-right: 1px solid var(--synu-color-border);
+  animation: synu-drawer-in-left var(--synu-duration-slow) var(--synu-ease-out);
+}
+.synu-drawer-content--bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 90dvh;
+  border-top: 1px solid var(--synu-color-border);
+  border-radius: var(--synu-radius-xl) var(--synu-radius-xl) 0 0;
+  animation: synu-drawer-in-bottom var(--synu-duration-slow) var(--synu-ease-out);
+}
+.synu-drawer-content--top {
+  left: 0;
+  right: 0;
+  top: 0;
+  max-height: 90dvh;
+  border-bottom: 1px solid var(--synu-color-border);
+  border-radius: 0 0 var(--synu-radius-xl) var(--synu-radius-xl);
+  animation: synu-drawer-in-top var(--synu-duration-slow) var(--synu-ease-out);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+
+.synu-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--synu-spacing-5) var(--synu-spacing-6);
+  border-bottom: 1px solid var(--synu-color-border);
+  flex-shrink: 0;
+  gap: var(--synu-spacing-4);
+}
+
+.synu-drawer-title {
+  font-size: var(--synu-font-size-lg);
+  font-weight: var(--synu-font-weight-semibold);
+  color: var(--synu-text-primary);
+  letter-spacing: var(--synu-letter-spacing-tight);
+  line-height: var(--synu-line-height-tight);
+}
+
+.synu-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--synu-radius-md);
+  cursor: pointer;
+  color: var(--synu-text-tertiary);
+  background: none;
+  border: none;
+  outline: none;
+  flex-shrink: 0;
+  transition:
+    background var(--synu-duration-fast) var(--synu-ease-out),
+    color var(--synu-duration-fast) var(--synu-ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.synu-drawer-close:hover {
+  background: var(--synu-color-surface-hover);
+  color: var(--synu-text-primary);
+}
+.synu-drawer-close:focus-visible {
+  box-shadow: 0 0 0 2px var(--synu-color-focus-ring);
+}
+
+/* ── Body ───────────────────────────────────────────────────── */
+
+.synu-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--synu-spacing-6);
+  scrollbar-width: thin;
+  scrollbar-color: var(--synu-color-border) transparent;
+}
+.synu-drawer-body::-webkit-scrollbar { width: 6px; }
+.synu-drawer-body::-webkit-scrollbar-track { background: transparent; }
+.synu-drawer-body::-webkit-scrollbar-thumb {
+  background: var(--synu-color-border);
+  border-radius: var(--synu-radius-full);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.synu-drawer-footer {
+  flex-shrink: 0;
+  padding: var(--synu-spacing-4) var(--synu-spacing-6);
+  border-top: 1px solid var(--synu-color-border);
+  display: flex;
+  gap: var(--synu-spacing-2);
+  justify-content: flex-end;
+}
+
+/* ── Animations ─────────────────────────────────────────────── */
+
+@keyframes synu-drawer-in-right  { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes synu-drawer-in-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes synu-drawer-in-bottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes synu-drawer-in-top    { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-drawer-backdrop { animation: none; }
+  .synu-drawer-content  { animation: none; }
+  .synu-drawer-close    { transition: none; }
+}
