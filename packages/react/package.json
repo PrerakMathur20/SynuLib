@@ -1,0 +1,54 @@
+{
+  "name": "@synu/react",
+  "version": "0.1.0",
+  "description": "React adapter for Synu — composable headless components, hooks, and theming context",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.cjs.json && node ../../scripts/stamp-cjs.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "headless",
+    "accessibility",
+    "a11y",
+    "synu",
+    "components",
+    "ui"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "xstate": ">=5.0.0",
+    "@synu/theme": "*"
+  },
+  "dependencies": {
+    "@synu/core": "*",
+    "@synu/tokens": "*",
+    "@xstate/react": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "xstate": "^5.0.0"
+  }
+}
