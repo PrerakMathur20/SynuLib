@@ -118,30 +118,66 @@ export interface RatingProps {
   max?: number;
   readOnly?: boolean;
   onChange?: (value: number) => void;
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
 }
 
-export function Rating({ value = 0, max = 5, readOnly = false, onChange }: RatingProps) {
+export function Rating({ value = 0, max = 5, readOnly = false, onChange, size = 'md', label = 'Rating' }: RatingProps) {
+  const [hovered, setHovered] = useState<number | null>(null);
+  const display = hovered ?? value;
+
+  const sizeMap = { sm: '18px', md: '24px', lg: '32px' };
+
   return (
-    <div className="synu-rating" role="radiogroup" aria-label="Rating">
+    <div
+      className={cn('synu-rating', readOnly && 'synu-rating--readonly')}
+      role="radiogroup"
+      aria-label={label}
+      data-readonly={readOnly || undefined}
+    >
       {Array.from({ length: max }).map((_, index) => {
         const current = index + 1;
+        const filled = current <= display;
         return (
           <button
             key={current}
             type="button"
             role="radio"
             aria-checked={current <= value}
+            aria-label={`${current} star${current !== 1 ? 's' : ''}`}
             disabled={readOnly}
-            className={cn('synu-rating-star', current <= value && 'synu-rating-star--active')}
+            className={cn(
+              'synu-rating-star',
+              filled && 'synu-rating-star--active',
+              hovered !== null && filled && 'synu-rating-star--hover',
+            )}
+            style={{ fontSize: sizeMap[size] }}
             onClick={() => onChange?.(current)}
+            onMouseEnter={() => !readOnly && setHovered(current)}
+            onMouseLeave={() => !readOnly && setHovered(null)}
           >
-            ★
+            <svg
+              viewBox="0 0 24 24"
+              width={sizeMap[size]}
+              height={sizeMap[size]}
+              aria-hidden="true"
+              fill={filled ? 'currentColor' : 'none'}
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
           </button>
         );
       })}
     </div>
   );
 }
+
+// Alias with more semantic name
+export { Rating as StarRating };
 
 export interface TransferItem {
   id: string;
@@ -202,41 +238,7 @@ export function TransferList({ left, right, onChange, leftTitle = 'Available', r
   );
 }
 
-export interface ToggleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  selected?: boolean;
-}
-
-export function ToggleButton({ selected, className, ...props }: ToggleButtonProps) {
-  return <button className={cn('synu-toggle-button', selected && 'synu-toggle-button--selected', className)} {...props} />;
-}
-
-export interface ToggleButtonGroupProps {
-  value: string[];
-  onChange: (value: string[]) => void;
-  children: React.ReactElement<ToggleButtonProps>[];
-}
-
-export function ToggleButtonGroup({ value, onChange, children }: ToggleButtonGroupProps) {
-  return (
-    <div className="synu-toggle-group" role="group">
-      {children.map((child) => {
-        const childValue = child.props.value as string;
-        const selected = value.includes(childValue);
-        return React.cloneElement(child, {
-          key: childValue,
-          selected,
-          onClick: () => {
-            if (selected) {
-              onChange(value.filter((item) => item !== childValue));
-            } else {
-              onChange([...value, childValue]);
-            }
-          },
-        });
-      })}
-    </div>
-  );
-}
+// ToggleButton and ToggleGroup are in components/toggle/index.tsx
 
 export interface SynuIconProps extends React.HTMLAttributes<HTMLSpanElement> {
   name: 'search' | 'close' | 'menu' | 'check' | 'star' | 'arrow-right';
@@ -277,13 +279,7 @@ export function Backdrop({ open, onClick, className, children, ...props }: Backd
   );
 }
 
-export interface AppBarProps extends React.HTMLAttributes<HTMLElement> {
-  position?: 'static' | 'sticky' | 'fixed';
-}
-
-export function AppBar({ position = 'static', className, ...props }: AppBarProps) {
-  return <header className={cn('synu-app-bar', `synu-app-bar--${position}`, className)} {...props} />;
-}
+// AppBar is in components/app-bar/index.tsx
 
 export interface PaperProps extends React.HTMLAttributes<HTMLDivElement> {
   elevation?: 0 | 1 | 2 | 3;
@@ -293,35 +289,7 @@ export function Paper({ elevation = 1, className, ...props }: PaperProps) {
   return <div className={cn('synu-paper', `synu-paper--${elevation}`, className)} {...props} />;
 }
 
-export interface BottomNavigationItem {
-  value: string;
-  label: string;
-  icon?: React.ReactNode;
-}
-
-export interface BottomNavigationProps {
-  value: string;
-  onChange: (value: string) => void;
-  items: BottomNavigationItem[];
-}
-
-export function BottomNavigation({ value, onChange, items }: BottomNavigationProps) {
-  return (
-    <nav className="synu-bottom-nav" aria-label="Bottom Navigation">
-      {items.map((item) => (
-        <button
-          key={item.value}
-          type="button"
-          className={cn('synu-bottom-nav-item', item.value === value && 'synu-bottom-nav-item--active')}
-          onClick={() => onChange(item.value)}
-        >
-          {item.icon}
-          <span>{item.label}</span>
-        </button>
-      ))}
-    </nav>
-  );
-}
+// BottomNavigation is in components/bottom-nav/index.tsx
 
 export interface SpeedDialAction {
   id: string;
@@ -362,31 +330,7 @@ export function SpeedDial({ label = 'Open actions', actions }: SpeedDialProps) {
   );
 }
 
-export interface Step {
-  label: string;
-  description?: string;
-}
-
-export interface StepperProps {
-  steps: Step[];
-  activeStep: number;
-}
-
-export function Stepper({ steps, activeStep }: StepperProps) {
-  return (
-    <ol className="synu-stepper">
-      {steps.map((step, index) => (
-        <li key={step.label} className={cn('synu-step', index <= activeStep && 'synu-step--active')}>
-          <span className="synu-step-index">{index + 1}</span>
-          <div>
-            <div className="synu-step-label">{step.label}</div>
-            {step.description && <div className="synu-step-description">{step.description}</div>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  );
-}
+// Stepper is in components/stepper/index.tsx
 
 export interface ImageListProps extends React.HTMLAttributes<HTMLDivElement> {
   cols?: number;
@@ -421,6 +365,160 @@ export function ClickAwayListener({ onClickAway, children }: ClickAwayListenerPr
       ref.current = node;
     },
   });
+}
+
+// ─── OTP Input ──────────────────────────────────────────────
+
+export interface OtpInputProps {
+  length?: number;
+  value?: string;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
+  error?: boolean;
+  label?: string;
+}
+
+export function OtpInput({ length = 6, value = '', onChange, disabled = false, error = false, label }: OtpInputProps) {
+  const digits = value.slice(0, length).padEnd(length, '').split('');
+  const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
+
+  const handleChange = (index: number, char: string) => {
+    const filtered = char.replace(/\D/g, '').slice(0, 1);
+    const next = digits.map((d, i) => (i === index ? filtered : d)).join('').trimEnd();
+    onChange?.(next);
+    if (filtered && index < length - 1) {
+      inputsRef.current[index + 1]?.focus();
+    }
+  };
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !digits[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus();
+      const next = digits.map((d, i) => (i === index - 1 ? '' : d)).join('').trimEnd();
+      onChange?.(next);
+    }
+    if (e.key === 'ArrowLeft' && index > 0) inputsRef.current[index - 1]?.focus();
+    if (e.key === 'ArrowRight' && index < length - 1) inputsRef.current[index + 1]?.focus();
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, length);
+    onChange?.(pasted);
+    const focusIndex = Math.min(pasted.length, length - 1);
+    inputsRef.current[focusIndex]?.focus();
+  };
+
+  return (
+    <div className="synu-otp-root">
+      {label && <label className="synu-label" style={{ marginBottom: 'var(--synu-spacing-2)', display: 'block' }}>{label}</label>}
+      <div className="synu-otp-inputs" aria-label={label ?? 'OTP Input'}>
+        {digits.map((digit, index) => (
+          <input
+            key={index}
+            ref={(el) => { inputsRef.current[index] = el; }}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={1}
+            value={digit.trim()}
+            disabled={disabled}
+            className={cn('synu-otp-cell', error && 'synu-otp-cell--error', digit.trim() && 'synu-otp-cell--filled')}
+            aria-label={`Digit ${index + 1} of ${length}`}
+            onChange={(e) => handleChange(index, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(index, e)}
+            onPaste={handlePaste}
+            onFocus={(e) => e.target.select()}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── File Drop Zone ──────────────────────────────────────────
+
+export interface FileDropZoneProps {
+  onFiles?: (files: File[]) => void;
+  accept?: string;
+  multiple?: boolean;
+  disabled?: boolean;
+  label?: string;
+  hint?: string;
+  maxSize?: number; // bytes
+}
+
+export function FileDropZone({
+  onFiles,
+  accept,
+  multiple = false,
+  disabled = false,
+  label = 'Drop files here or click to upload',
+  hint,
+  maxSize,
+}: FileDropZoneProps) {
+  const [dragging, setDragging] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const process = (incoming: FileList | null) => {
+    if (!incoming) return;
+    const arr = Array.from(incoming);
+    if (maxSize) {
+      const oversized = arr.find((f) => f.size > maxSize);
+      if (oversized) {
+        setError(`File "${oversized.name}" exceeds the ${Math.round(maxSize / 1024)}KB limit.`);
+        return;
+      }
+    }
+    setError(null);
+    setFiles(arr);
+    onFiles?.(arr);
+  };
+
+  return (
+    <div
+      className={cn('synu-dropzone', dragging && 'synu-dropzone--dragging', disabled && 'synu-dropzone--disabled', error && 'synu-dropzone--error')}
+      role="button"
+      tabIndex={disabled ? -1 : 0}
+      aria-disabled={disabled}
+      onClick={() => !disabled && inputRef.current?.click()}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputRef.current?.click(); }}}
+      onDragOver={(e) => { e.preventDefault(); if (!disabled) setDragging(true); }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragging(false);
+        if (!disabled) process(e.dataTransfer.files);
+      }}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+        style={{ display: 'none' }}
+        onChange={(e) => process(e.target.files)}
+      />
+      <div className="synu-dropzone__icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M6 22v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M16 6v14M10 12l6-6 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+      <div className="synu-dropzone__label">{label}</div>
+      {hint && !files.length && <div className="synu-dropzone__hint">{hint}</div>}
+      {error && <div className="synu-dropzone__error">{error}</div>}
+      {files.length > 0 && !error && (
+        <div className="synu-dropzone__files">
+          {files.map((f) => (
+            <span key={f.name} className="synu-dropzone__file">{f.name}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function CssBaseline() {
@@ -633,38 +731,4 @@ export function Charts({ data, labels = [] }: ChartsProps) {
   );
 }
 
-export interface TreeNode {
-  id: string;
-  label: string;
-  children?: TreeNode[];
-}
-
-export interface TreeViewProps {
-  data: TreeNode[];
-}
-
-function TreeBranch({ node }: { node: TreeNode }) {
-  const [open, setOpen] = useState(true);
-  const hasChildren = Boolean(node.children?.length);
-
-  return (
-    <li>
-      <button type="button" className="synu-tree-item" onClick={() => setOpen((state) => !state)}>
-        {hasChildren ? (open ? '▾' : '▸') : '•'} {node.label}
-      </button>
-      {hasChildren && open && (
-        <ul className="synu-tree-list">
-          {node.children?.map((child) => <TreeBranch key={child.id} node={child} />)}
-        </ul>
-      )}
-    </li>
-  );
-}
-
-export function TreeView({ data }: TreeViewProps) {
-  return (
-    <ul className="synu-tree-list" role="tree">
-      {data.map((node) => <TreeBranch key={node.id} node={node} />)}
-    </ul>
-  );
-}
+// TreeView is in components/treeview/index.tsx

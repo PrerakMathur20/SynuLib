@@ -1,0 +1,27 @@
+/* ── HoverCard ───────────────────────────────────────────── */
+
+.synu-hover-card {
+  z-index: var(--synu-z-popover);
+  background: var(--synu-color-surface-overlay);
+  border: 1px solid var(--synu-color-border);
+  border-radius: var(--synu-radius-xl);
+  box-shadow: var(--synu-shadow-xl);
+  padding: var(--synu-spacing-4);
+  min-width: 220px;
+  max-width: 360px;
+  animation: synu-hover-card-in var(--synu-duration-fast) var(--synu-ease-out);
+}
+
+@keyframes synu-hover-card-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.synu-hover-card--top { transform-origin: bottom center; }
+.synu-hover-card--bottom { transform-origin: top center; }
+.synu-hover-card--left  { transform-origin: right center; }
+.synu-hover-card--right { transform-origin: left center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-hover-card { animation: none; }
+}

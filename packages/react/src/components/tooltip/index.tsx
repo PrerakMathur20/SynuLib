@@ -12,64 +12,86 @@ export interface TooltipProps {
   disabled?: boolean;
 }
 
+interface TooltipState {
+  visible: boolean;
+  top: number;
+  left: number;
+  placement: TooltipPlacement;
+}
+
 export function Tooltip({ content, children, placement = 'top', delay = 300, disabled = false }: TooltipProps) {
-  const [visible, setVisible] = useState(false);
-  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const [state, setState] = useState<TooltipState>({ visible: false, top: 0, left: 0, placement });
   const triggerRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const tooltipId = useId();
+
+  // When placement prop changes and tooltip is visible, recompute
+  useEffect(() => {
+    if (state.visible && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const { top, left } = computePosition(rect, placement);
+      setState((prev) => ({ ...prev, top, left, placement }));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placement]);
 
   const show = useCallback(() => {
     timerRef.current = setTimeout(() => {
       if (!triggerRef.current) return;
       const rect = triggerRef.current.getBoundingClientRect();
-      const gap = 8;
-      let top = 0; let left = 0;
-      if (placement === 'top')    { top = rect.top + window.scrollY - gap; left = rect.left + window.scrollX + rect.width / 2; }
-      if (placement === 'bottom') { top = rect.bottom + window.scrollY + gap; left = rect.left + window.scrollX + rect.width / 2; }
-      if (placement === 'left')   { top = rect.top + window.scrollY + rect.height / 2; left = rect.left + window.scrollX - gap; }
-      if (placement === 'right')  { top = rect.top + window.scrollY + rect.height / 2; left = rect.right + window.scrollX + gap; }
-      setPos({ top, left });
-      setVisible(true);
+      const { top, left } = computePosition(rect, placement);
+      // Single atomic state update — position + visible at once
+      setState({ visible: true, top, left, placement });
     }, delay);
   }, [delay, placement]);
 
   const hide = useCallback(() => {
     clearTimeout(timerRef.current);
-    setVisible(false);
+    setState((prev) => ({ ...prev, visible: false }));
   }, []);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
   const transformMap: Record<TooltipPlacement, string> = {
-    top: 'translateX(-50%) translateY(-100%)',
+    top:    'translateX(-50%) translateY(-100%)',
     bottom: 'translateX(-50%)',
-    left: 'translateX(-100%) translateY(-50%)',
-    right: 'translateY(-50%)',
+    left:   'translateX(-100%) translateY(-50%)',
+    right:  'translateY(-50%)',
   };
 
   return (
     <>
       {React.cloneElement(children, {
         ref: triggerRef,
-        'aria-describedby': visible ? tooltipId : undefined,
-        onMouseEnter: (...args: unknown[]) => { if (!disabled) show(); (children.props as React.HTMLAttributes<HTMLElement>).onMouseEnter?.(...(args as [React.MouseEvent<HTMLElement>])); },
-        onMouseLeave: (...args: unknown[]) => { hide(); (children.props as React.HTMLAttributes<HTMLElement>).onMouseLeave?.(...(args as [React.MouseEvent<HTMLElement>])); },
-        onFocus:      (...args: unknown[]) => { if (!disabled) show(); (children.props as React.HTMLAttributes<HTMLElement>).onFocus?.(...(args as [React.FocusEvent<HTMLElement>])); },
-        onBlur:       (...args: unknown[]) => { hide(); (children.props as React.HTMLAttributes<HTMLElement>).onBlur?.(...(args as [React.FocusEvent<HTMLElement>])); },
+        'aria-describedby': state.visible ? tooltipId : undefined,
+        onMouseEnter: (...args: unknown[]) => {
+          if (!disabled) show();
+          (children.props as React.HTMLAttributes<HTMLElement>).onMouseEnter?.(...(args as [React.MouseEvent<HTMLElement>]));
+        },
+        onMouseLeave: (...args: unknown[]) => {
+          hide();
+          (children.props as React.HTMLAttributes<HTMLElement>).onMouseLeave?.(...(args as [React.MouseEvent<HTMLElement>]));
+        },
+        onFocus: (...args: unknown[]) => {
+          if (!disabled) show();
+          (children.props as React.HTMLAttributes<HTMLElement>).onFocus?.(...(args as [React.FocusEvent<HTMLElement>]));
+        },
+        onBlur: (...args: unknown[]) => {
+          hide();
+          (children.props as React.HTMLAttributes<HTMLElement>).onBlur?.(...(args as [React.FocusEvent<HTMLElement>]));
+        },
       })}
-      {visible && !disabled && (
+      {state.visible && !disabled && (
         <Portal>
           <div
             id={tooltipId}
             role="tooltip"
-            className="synu-tooltip-content"
+            className={cn('synu-tooltip-content', `synu-tooltip-content--${state.placement}`)}
             style={{
-              position: 'absolute',
-              top: pos.top,
-              left: pos.left,
-              transform: transformMap[placement],
-              visibility: (pos.top === 0 && pos.left === 0) ? 'hidden' : undefined,
+              position: 'fixed',
+              top: state.top,
+              left: state.left,
+              transform: transformMap[state.placement],
             }}
           >
             {content}
@@ -80,3 +102,16 @@ export function Tooltip({ content, children, placement = 'top', delay = 300, dis
   );
 }
 
+function computePosition(rect: DOMRect, placement: TooltipPlacement): { top: number; left: number } {
+  const gap = 8;
+  switch (placement) {
+    case 'top':
+      return { top: rect.top - gap, left: rect.left + rect.width / 2 };
+    case 'bottom':
+      return { top: rect.bottom + gap, left: rect.left + rect.width / 2 };
+    case 'left':
+      return { top: rect.top + rect.height / 2, left: rect.left - gap };
+    case 'right':
+      return { top: rect.top + rect.height / 2, left: rect.right + gap };
+  }
+}

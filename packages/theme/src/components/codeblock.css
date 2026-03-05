@@ -148,3 +148,82 @@
 [data-theme='dark'] .synu-codeblock__code {
   color: #c9d1d9;
 }
+
+/* ── Explicit theme overrides (data-codeblock-theme) ──── */
+
+/* Force dark GitHub style */
+[data-codeblock-theme='dark'].synu-codeblock,
+[data-codeblock-theme='dark'] .synu-codeblock {
+  background: #161b22;
+  border-color: #2d333b;
+}
+
+[data-codeblock-theme='dark'] .synu-codeblock__header {
+  background: #1c2128;
+  border-color: #2d333b;
+}
+
+[data-codeblock-theme='dark'] .synu-codeblock__code {
+  color: #e6edf3;
+}
+
+[data-codeblock-theme='dark'] .synu-codeblock__copy {
+  border-color: #30363d;
+  color: #8b949e;
+}
+
+[data-codeblock-theme='dark'] .synu-codeblock__copy:hover {
+  background: #21262d;
+  color: #c9d1d9;
+  border-color: #6e7681;
+}
+
+[data-codeblock-theme='dark'] .synu-codeblock__lines {
+  border-color: #30363d;
+  color: #6e7681;
+}
+
+/* Force light GitHub style */
+[data-codeblock-theme='light'].synu-codeblock {
+  background: #f6f8fa;
+  border-color: #d0d7de;
+}
+
+[data-codeblock-theme='light'] .synu-codeblock__header {
+  background: #ffffff;
+  border-color: #d0d7de;
+}
+
+[data-codeblock-theme='light'] .synu-codeblock__code {
+  color: #24292f;
+}
+
+[data-codeblock-theme='light'] .synu-codeblock__copy {
+  border-color: #d0d7de;
+  color: #57606a;
+}
+
+[data-codeblock-theme='light'] .synu-codeblock__copy:hover {
+  background: #eaeef2;
+  color: #24292f;
+  border-color: #8c959f;
+}
+
+[data-codeblock-theme='light'] .synu-codeblock__lines {
+  border-color: #d0d7de;
+  color: #8c959f;
+}
+
+/* Syntax token colors for light theme — applied via hljs or manual spans */
+[data-codeblock-theme='light'] .hljs-keyword,
+[data-codeblock-theme='light'] .hljs-selector-tag { color: #cf222e; }
+[data-codeblock-theme='light'] .hljs-string,
+[data-codeblock-theme='light'] .hljs-attr { color: #0a3069; }
+[data-codeblock-theme='light'] .hljs-comment { color: #6e7781; font-style: italic; }
+[data-codeblock-theme='light'] .hljs-type,
+[data-codeblock-theme='light'] .hljs-built_in { color: #953800; }
+[data-codeblock-theme='light'] .hljs-number,
+[data-codeblock-theme='light'] .hljs-literal { color: #0550ae; }
+[data-codeblock-theme='light'] .hljs-title,
+[data-codeblock-theme='light'] .hljs-function .hljs-title { color: #8250df; }
+[data-codeblock-theme='light'] .hljs-tag { color: #116329; }

@@ -1,0 +1,79 @@
+/* ── BottomNavigation ────────────────────────────────────── */
+
+.synu-bottom-nav {
+  display: flex;
+  align-items: stretch;
+  background: var(--synu-color-surface-overlay);
+  border-top: 1px solid var(--synu-color-border);
+  width: 100%;
+  box-shadow: var(--synu-shadow-lg);
+}
+
+.synu-bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--synu-spacing-2) var(--synu-spacing-1);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--synu-text-tertiary);
+  transition: color var(--synu-duration-fast) var(--synu-ease-out),
+              background var(--synu-duration-fast) var(--synu-ease-out);
+  font-family: var(--synu-font-family);
+  min-height: 56px;
+}
+
+.synu-bottom-nav__item:hover {
+  background: var(--synu-color-surface-hover);
+  color: var(--synu-text-secondary);
+}
+
+.synu-bottom-nav__item--active {
+  color: var(--synu-color-primary);
+}
+
+.synu-bottom-nav__item:focus-visible {
+  outline: none;
+  background: var(--synu-color-primary-subtle);
+}
+
+.synu-bottom-nav__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.synu-bottom-nav__badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--synu-color-error);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--synu-font-weight-bold);
+  border-radius: var(--synu-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.synu-bottom-nav__label {
+  font-size: 10px;
+  font-weight: var(--synu-font-weight-medium);
+  letter-spacing: 0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-bottom-nav__item { transition: none; }
+}

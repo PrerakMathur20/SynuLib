@@ -54,6 +54,10 @@ export * from './components/extended/index.js';
 // ─── Hooks ────────────────────────────────────────────────
 export * from './hooks/useControllableState.js';
 export * from './hooks/useId.js';
+export * from './hooks/useDialog.js';
+export * from './hooks/usePopover.js';
+export * from './hooks/useMenu.js';
+export * from './hooks/useTabs.js';
 
 // ─── Context / Theme ──────────────────────────────────────
 export * from './context/ThemeContext.js';
@@ -61,6 +65,39 @@ export * from './context/ConfigProvider.js';
 
 // ─── Code Display ─────────────────────────────────────────
 export * from './components/codeblock/index.js';
+
+// ─── New Data Display ─────────────────────────────────────
+export * from './components/pagination/index.js';
+export * from './components/timeline/index.js';
+export * from './components/treeview/index.js';
+export * from './components/statistic/index.js';
+export * from './components/emptystate/index.js';
+export * from './components/result/index.js';
+
+// ─── New Navigation ───────────────────────────────────────
+export * from './components/stepper/index.js';
+export * from './components/bottom-nav/index.js';
+export * from './components/nav-rail/index.js';
+export * from './components/app-bar/index.js';
+
+// ─── New Feedback & Overlays ──────────────────────────────
+export * from './components/circular-progress/index.js';
+export * from './components/confirm-dialog/index.js';
+export * from './components/hover-card/index.js';
+export * from './components/context-menu/index.js';
+export * from './components/dropdown/index.js';
+export * from './components/command-palette/index.js';
+
+// ─── New Inputs ───────────────────────────────────────────
+export * from './components/search-field/index.js';
+export * from './components/toggle/index.js';
+
+// ─── Charts ───────────────────────────────────────────────
+export * from './components/charts/index.js';
+
+// ─── Data ─────────────────────────────────────────────────
+export * from './components/virtual-list/index.js';
+export * from './components/infinite-scroll/index.js';
 
 // ─── Utilities ────────────────────────────────────────────
 export { cn } from './utils/cn.js';

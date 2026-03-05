@@ -1,0 +1,104 @@
+/* ── NavigationRail ──────────────────────────────────────── */
+
+.synu-nav-rail {
+  display: flex;
+  flex-direction: column;
+  width: 72px;
+  background: var(--synu-color-surface);
+  border-right: 1px solid var(--synu-color-border);
+  height: 100%;
+  align-items: stretch;
+}
+
+.synu-nav-rail__header {
+  padding: var(--synu-spacing-4) var(--synu-spacing-2) var(--synu-spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--synu-color-border);
+}
+
+.synu-nav-rail__items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--synu-spacing-2) 0;
+  gap: var(--synu-spacing-1);
+  overflow-y: auto;
+}
+
+.synu-nav-rail__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: var(--synu-spacing-2) var(--synu-spacing-1);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--synu-text-tertiary);
+  transition: color var(--synu-duration-fast) var(--synu-ease-out),
+              background var(--synu-duration-fast) var(--synu-ease-out);
+  font-family: var(--synu-font-family);
+  border-radius: var(--synu-radius-md);
+  margin: 0 var(--synu-spacing-1);
+}
+
+.synu-nav-rail__item:hover {
+  background: var(--synu-color-surface-hover);
+  color: var(--synu-text-secondary);
+}
+
+.synu-nav-rail__item--active {
+  color: var(--synu-color-primary);
+  background: var(--synu-color-primary-subtle);
+}
+
+.synu-nav-rail__item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--synu-color-focus-ring);
+}
+
+.synu-nav-rail__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.synu-nav-rail__badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--synu-color-error);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--synu-font-weight-bold);
+  border-radius: var(--synu-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.synu-nav-rail__label {
+  font-size: 10px;
+  font-weight: var(--synu-font-weight-medium);
+  text-align: center;
+}
+
+.synu-nav-rail__footer {
+  padding: var(--synu-spacing-2);
+  border-top: 1px solid var(--synu-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-nav-rail__item { transition: none; }
+}

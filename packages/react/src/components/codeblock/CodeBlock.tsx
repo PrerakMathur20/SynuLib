@@ -1,12 +1,15 @@
 import React, { useState, useCallback } from 'react';
 import { cn } from '../../utils/cn.js';
 
+export type CodeBlockTheme = 'dark' | 'light' | 'auto';
+
 export interface CodeBlockProps {
   code: string;
   language?: string;
   filename?: string;
   highlightedHtml?: string;
   showLineNumbers?: boolean;
+  theme?: CodeBlockTheme;
   className?: string;
 }
 
@@ -29,6 +32,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   filename,
   highlightedHtml,
   showLineNumbers = false,
+  theme = 'auto',
   className,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -56,7 +60,10 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   const lines = code.split('\n');
 
   return (
-    <div className={cn('synu-codeblock', className)}>
+    <div
+      className={cn('synu-codeblock', className)}
+      data-codeblock-theme={theme !== 'auto' ? theme : undefined}
+    >
       <div className="synu-codeblock__header">
         <span className="synu-codeblock__lang">
           {filename ?? language ?? 'code'}

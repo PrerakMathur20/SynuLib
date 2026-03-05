@@ -5,7 +5,7 @@
 /* ── Tooltip ────────────────────────────────────────────────── */
 
 .synu-tooltip-content {
-  position: absolute;
+  position: fixed;
   z-index: var(--synu-z-tooltip);
   background: var(--synu-color-neutral-900);
   color: var(--synu-text-inverse);
@@ -93,8 +93,8 @@
 /* ── Animations ─────────────────────────────────────────────── */
 
 @keyframes synu-tooltip-in {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes synu-popover-in {

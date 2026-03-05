@@ -36,19 +36,16 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "xstate": ">=5.0.0",
     "@synu/theme": "*"
   },
   "dependencies": {
     "@synu/core": "*",
-    "@synu/tokens": "*",
-    "@xstate/react": "^4.0.0"
+    "@synu/tokens": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "xstate": "^5.0.0"
+    "react-dom": "^18.0.0"
   }
 }

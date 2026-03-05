@@ -32,10 +32,6 @@
     "framework-agnostic"
   ],
   "license": "MIT",
-  "peerDependencies": {
-    "xstate": ">=5.0.0"
-  },
-  "devDependencies": {
-    "xstate": "^5.0.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

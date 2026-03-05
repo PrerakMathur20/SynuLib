@@ -1,0 +1,19 @@
+/* ── VirtualizedList ─────────────────────────────────────── */
+
+.synu-virtual-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--synu-color-border) transparent;
+}
+
+.synu-virtual-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.synu-virtual-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.synu-virtual-list::-webkit-scrollbar-thumb {
+  background: var(--synu-color-border);
+  border-radius: var(--synu-radius-full);
+}

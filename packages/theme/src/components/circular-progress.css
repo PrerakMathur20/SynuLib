@@ -1,0 +1,54 @@
+/* ── CircularProgress ────────────────────────────────────── */
+
+.synu-circular-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.synu-circular-progress__track {
+  stroke: var(--synu-color-border);
+}
+
+.synu-circular-progress__fill {
+  stroke: var(--synu-color-primary);
+  transition: stroke-dashoffset 0.5s var(--synu-ease-out);
+}
+
+/* Variants */
+.synu-circular-progress--success .synu-circular-progress__fill { stroke: var(--synu-color-success); }
+.synu-circular-progress--warning .synu-circular-progress__fill { stroke: var(--synu-color-warning); }
+.synu-circular-progress--error   .synu-circular-progress__fill { stroke: var(--synu-color-error); }
+
+/* Indeterminate spin */
+.synu-circular-progress--indeterminate svg {
+  animation: synu-cprogress-spin 1s linear infinite;
+}
+
+.synu-circular-progress--indeterminate .synu-circular-progress__fill {
+  transition: none;
+}
+
+@keyframes synu-cprogress-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Label (center) */
+.synu-circular-progress__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--synu-font-size-xs);
+  font-weight: var(--synu-font-weight-semibold);
+  color: var(--synu-text-primary);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-circular-progress--indeterminate svg { animation: none; }
+  .synu-circular-progress__fill { transition: none; }
+}

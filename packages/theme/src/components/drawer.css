@@ -67,24 +67,37 @@
 /* ── Header ─────────────────────────────────────────────────── */
 
 .synu-drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: start;
   padding: var(--synu-spacing-5) var(--synu-spacing-6);
   border-bottom: 1px solid var(--synu-color-border);
   flex-shrink: 0;
-  gap: var(--synu-spacing-4);
+  gap: var(--synu-spacing-1) var(--synu-spacing-4);
 }
 
 .synu-drawer-title {
+  grid-column: 1;
   font-size: var(--synu-font-size-lg);
   font-weight: var(--synu-font-weight-semibold);
   color: var(--synu-text-primary);
   letter-spacing: var(--synu-letter-spacing-tight);
   line-height: var(--synu-line-height-tight);
+  margin: 0;
+}
+
+.synu-drawer-description {
+  grid-column: 1;
+  font-size: var(--synu-font-size-sm);
+  color: var(--synu-text-secondary);
+  margin: 0;
+  line-height: var(--synu-line-height-relaxed);
 }
 
 .synu-drawer-close {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   align-items: center;
   justify-content: center;

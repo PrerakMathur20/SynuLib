@@ -1,27 +1,15 @@
-import { setup } from 'xstate';
+import { createMachine } from '../../state/create-machine.js';
 import type { ButtonContext, ButtonEvent } from './button.types.js';
 
-export const buttonMachine = setup({
-  types: {
-    context: {} as ButtonContext,
-    events: {} as ButtonEvent,
-  },
-}).createMachine({
+type ButtonState = 'idle' | 'pressed';
+type ButtonEventType = ButtonEvent['type'];
+
+export const buttonMachine = createMachine<ButtonState, ButtonEventType, ButtonContext>({
   id: 'button',
   initial: 'idle',
-  context: {
-    disabled: false,
-  },
+  context: { disabled: false },
   states: {
-    idle: {
-      on: {
-        PRESS: 'pressed',
-      },
-    },
-    pressed: {
-      on: {
-        RELEASE: 'idle',
-      },
-    },
+    idle:    { PRESS: 'pressed' },
+    pressed: { RELEASE: 'idle' },
   },
 });

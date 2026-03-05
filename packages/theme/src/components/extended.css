@@ -220,28 +220,174 @@
 
 .synu-rating {
   display: inline-flex;
-  gap: var(--synu-spacing-1);
+  gap: 2px;
   align-items: center;
 }
 .synu-rating-star {
   border: 0;
   background: transparent;
-  font-size: 22px;
   color: var(--synu-color-neutral-300);
   cursor: pointer;
-  transition: color var(--synu-duration-fast) var(--synu-ease-out), transform var(--synu-duration-fast) var(--synu-ease-out);
+  transition:
+    color var(--synu-duration-fast) var(--synu-ease-out),
+    transform var(--synu-duration-fast) var(--synu-ease-spring);
   outline: none;
   line-height: 1;
-  padding: 0;
+  padding: 2px;
   display: inline-flex;
   align-items: center;
   -webkit-tap-highlight-color: transparent;
 }
-.synu-rating-star:hover,
-.synu-rating-star--hover { color: var(--synu-color-warning); transform: scale(1.1); }
+.synu-rating-star:hover { color: var(--synu-color-warning); transform: scale(1.15); }
 .synu-rating-star--active { color: var(--synu-color-warning); }
-.synu-rating-star:focus-visible { box-shadow: 0 0 0 2px var(--synu-color-focus-ring); border-radius: var(--synu-radius-sm); }
+.synu-rating-star--hover { transform: scale(1.15); }
+.synu-rating-star:focus-visible {
+  box-shadow: 0 0 0 2px var(--synu-color-focus-ring);
+  border-radius: var(--synu-radius-sm);
+  outline: none;
+}
+.synu-rating--readonly .synu-rating-star,
 .synu-rating[data-readonly="true"] .synu-rating-star { cursor: default; pointer-events: none; }
+
+/* ── OTP Input ──────────────────────────────────────────────── */
+
+.synu-otp-root {
+  display: inline-block;
+}
+
+.synu-otp-inputs {
+  display: flex;
+  gap: var(--synu-spacing-2);
+  align-items: center;
+}
+
+.synu-otp-cell {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: var(--synu-font-size-xl);
+  font-weight: var(--synu-font-weight-semibold);
+  font-family: var(--synu-font-family-mono);
+  border: 1.5px solid var(--synu-color-border-strong);
+  border-radius: var(--synu-radius-lg);
+  background: var(--synu-color-surface-raised);
+  color: var(--synu-text-primary);
+  transition:
+    border-color var(--synu-duration-fast) var(--synu-ease-out),
+    box-shadow var(--synu-duration-fast) var(--synu-ease-out);
+  outline: none;
+  caret-color: var(--synu-color-primary);
+}
+
+.synu-otp-cell:focus {
+  border-color: var(--synu-color-primary);
+  box-shadow: 0 0 0 3px var(--synu-color-focus-ring);
+}
+
+.synu-otp-cell--filled {
+  border-color: var(--synu-color-primary);
+  background: var(--synu-color-primary-subtle);
+}
+
+.synu-otp-cell--error {
+  border-color: var(--synu-color-error);
+}
+
+.synu-otp-cell--error:focus {
+  box-shadow: 0 0 0 3px var(--synu-color-focus-ring-error);
+}
+
+.synu-otp-cell:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--synu-color-surface);
+}
+
+/* ── File Drop Zone ─────────────────────────────────────────── */
+
+.synu-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--synu-spacing-2);
+  padding: var(--synu-spacing-8) var(--synu-spacing-6);
+  border: 2px dashed var(--synu-color-border-strong);
+  border-radius: var(--synu-radius-xl);
+  background: var(--synu-color-surface);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color var(--synu-duration-normal) var(--synu-ease-out),
+    background var(--synu-duration-normal) var(--synu-ease-out);
+  outline: none;
+  min-height: 140px;
+}
+
+.synu-dropzone:focus-visible {
+  box-shadow: 0 0 0 3px var(--synu-color-focus-ring);
+  border-color: var(--synu-color-primary);
+}
+
+.synu-dropzone:hover,
+.synu-dropzone--dragging {
+  border-color: var(--synu-color-primary);
+  background: var(--synu-color-primary-subtle);
+}
+
+.synu-dropzone--error {
+  border-color: var(--synu-color-error);
+  background: var(--synu-color-error-subtle);
+}
+
+.synu-dropzone--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.synu-dropzone__icon {
+  color: var(--synu-text-tertiary);
+  transition: color var(--synu-duration-fast) var(--synu-ease-out);
+}
+
+.synu-dropzone:hover .synu-dropzone__icon,
+.synu-dropzone--dragging .synu-dropzone__icon {
+  color: var(--synu-color-primary);
+}
+
+.synu-dropzone__label {
+  font-size: var(--synu-font-size-sm);
+  font-weight: var(--synu-font-weight-medium);
+  color: var(--synu-text-primary);
+}
+
+.synu-dropzone__hint {
+  font-size: var(--synu-font-size-xs);
+  color: var(--synu-text-tertiary);
+}
+
+.synu-dropzone__error {
+  font-size: var(--synu-font-size-xs);
+  color: var(--synu-color-error);
+  font-weight: var(--synu-font-weight-medium);
+}
+
+.synu-dropzone__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--synu-spacing-1);
+  justify-content: center;
+}
+
+.synu-dropzone__file {
+  font-size: var(--synu-font-size-xs);
+  padding: 2px var(--synu-spacing-2);
+  background: var(--synu-color-primary-subtle);
+  color: var(--synu-color-primary);
+  border-radius: var(--synu-radius-full);
+  font-weight: var(--synu-font-weight-medium);
+}
 
 /* ── App Bar ────────────────────────────────────────────────── */
 

@@ -1,0 +1,33 @@
+/* ── Dropdown ────────────────────────────────────────────── */
+
+.synu-dropdown {
+  z-index: var(--synu-z-dropdown);
+  background: var(--synu-color-surface-overlay);
+  border: 1px solid var(--synu-color-border);
+  border-radius: var(--synu-radius-xl);
+  box-shadow: var(--synu-shadow-xl);
+  padding: var(--synu-spacing-2);
+  min-width: 160px;
+  max-width: 320px;
+  animation: synu-dropdown-in var(--synu-duration-fast) var(--synu-ease-out);
+  outline: none;
+}
+
+@keyframes synu-dropdown-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.synu-dropdown--top-start,
+.synu-dropdown--top-end {
+  animation-name: synu-dropdown-in-up;
+}
+
+@keyframes synu-dropdown-in-up {
+  from { opacity: 0; transform: translateY(4px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .synu-dropdown { animation: none; }
+}
