@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { generateId } from '/core';
+import { generateId } from '@tokis/core';
 
 /**
  * Returns a stable, unique ID for the lifetime of the component.

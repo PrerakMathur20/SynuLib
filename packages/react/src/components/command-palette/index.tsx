@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { cn } from '../../utils/cn.js';
 import { Portal } from '../portal/index.js';
-import { trapFocus } from '/core';
+import { trapFocus } from '@tokis/core';
 
 export interface CommandItem {
   id: string;

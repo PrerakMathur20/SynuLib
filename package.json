@@ -1,8 +1,8 @@
 {
   "name": "tokis-monorepo",
   "private": true,
-  "version": "0.1.0",
-  "description": "Tokis — Performance-first, token-native UI design system monorepo",
+  "version": "1.0.0",
+  "description": "Tokis (Tokis Only Knows Its Styles) — Performance-first, token-native UI design system monorepo",
   "workspaces": [
     "packages/tokens",
     "packages/core",
@@ -21,8 +21,9 @@
     "publish:theme": "npm publish --workspace=packages/theme",
     "publish:react": "npm publish --workspace=packages/react",
     "publish:tokis": "npm publish --workspace=packages/tokis",
-    "publish:all": "npm run release:check && npm run publish:tokens && npm run publish:core && npm run publish:theme && npm run publish:react && npm run publish:tokis",
-    "version:set": "node scripts/set-version.js"
+    "publish:all": "npm run version:set && npm run release:check && npm run publish:tokens && npm run publish:core && npm run publish:theme && npm run publish:react && npm run publish:tokis",
+    "version:set": "node scripts/set-version.js",
+    "version:sync": "node scripts/set-version.js"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

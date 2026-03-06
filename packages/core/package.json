@@ -1,6 +1,6 @@
 {
-  "name": "/core",
-  "version": "0.1.0",
+  "name": "@tokis/core",
+  "version": "1.0.9",
   "description": "Framework-agnostic headless primitives for Tokis — state machines, accessibility helpers, and focus management. Zero dependencies.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -45,12 +45,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokis-design/tokis.git",
+    "url": "https://github.com/PrerakMathur20/TokisLib.git",
     "directory": "packages/core"
   },
-  "homepage": "https://tokis.dev",
+  "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
-    "url": "https://github.com/tokis-design/tokis/issues"
+    "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "publishConfig": {
     "access": "public",

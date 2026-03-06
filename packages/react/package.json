@@ -1,6 +1,6 @@
 {
-  "name": "/react",
-  "version": "0.1.0",
+  "name": "@tokis/react",
+  "version": "1.0.9",
   "description": "React adapter for Tokis — composable, accessible components, hooks, and theming context. Zero runtime CSS.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -50,21 +50,21 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokis-design/tokis.git",
+    "url": "https://github.com/PrerakMathur20/TokisLib.git",
     "directory": "packages/react"
   },
-  "homepage": "https://tokis.dev/docs/introduction",
+  "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
-    "url": "https://github.com/tokis-design/tokis/issues"
+    "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "/theme": "^0.1.0"
+    "@tokis/theme": "^1.0.9"
   },
   "dependencies": {
-    "/core": "^0.1.0",
-    "/tokens": "^0.1.0"
+    "@tokis/core": "^1.0.9",
+    "@tokis/tokens": "^1.0.9"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

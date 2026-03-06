@@ -1,6 +1,6 @@
 {
-  "name": "/tokens",
-  "version": "0.1.0",
+  "name": "@tokis/tokens",
+  "version": "1.0.9",
   "description": "Design token engine for Tokis — color primitives, semantic scales, spacing, typography, shadows, motion, and CSS variable generation.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -48,12 +48,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokis-design/tokis.git",
+    "url": "https://github.com/PrerakMathur20/TokisLib.git",
     "directory": "packages/tokens"
   },
-  "homepage": "https://tokis.dev/docs/theming",
+  "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
-    "url": "https://github.com/tokis-design/tokis/issues"
+    "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"

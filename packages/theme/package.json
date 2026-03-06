@@ -1,6 +1,6 @@
 {
-  "name": "/theme",
-  "version": "0.1.0",
+  "name": "@tokis/theme",
+  "version": "1.0.9",
   "description": "Default visual theme for Tokis — CSS variables, component styles, reset, and typography. Zero-runtime, precompiled CSS.",
   "exports": {
     ".": "./src/index.css",
@@ -55,12 +55,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokis-design/tokis.git",
+    "url": "https://github.com/PrerakMathur20/TokisLib.git",
     "directory": "packages/theme"
   },
-  "homepage": "https://tokis.dev/docs/theming",
+  "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
-    "url": "https://github.com/tokis-design/tokis/issues"
+    "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "publishConfig": {
     "access": "public",

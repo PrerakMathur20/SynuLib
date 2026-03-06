@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useId } from 'react';
 import { cn } from '../../utils/cn.js';
 import { Portal } from '../portal/index.js';
-import { trapFocus } from '/core';
+import { trapFocus } from '@tokis/core';
 
 export interface DialogProps {
   open: boolean;

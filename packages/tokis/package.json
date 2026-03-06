@@ -1,31 +1,31 @@
 {
-  "name": "/tokis",
-  "version": "0.1.0",
-  "description": "Performance-first, token-native UI design system for React. Install this package to get all Tokis libraries: /react, /theme, /core, and /tokens.",
+  "name": "tokis",
+  "version": "1.0.9",
+  "description": "Tokis Only Knows Its Styles — Performance-first, token-native UI design system for React. Install this package to get all Tokis libraries: @tokis/react, @tokis/theme, @tokis/core, and @tokis/tokens.",
   "main": "./index.js",
   "module": "./index.mjs",
   "types": "./index.d.ts",
   "exports": {
     ".": {
-      "require": "./index.js",
+      "types": "./index.d.ts",
       "import": "./index.mjs",
-      "types": "./index.d.ts"
+      "require": "./index.js"
     },
     "./react": {
-      "require": "/react",
-      "import": "/react",
-      "types": "/react"
+      "types": "@tokis/react",
+      "import": "@tokis/react",
+      "require": "@tokis/react"
     },
-    "./theme": "/theme",
+    "./theme": "@tokis/theme",
     "./core": {
-      "require": "/core",
-      "import": "/core",
-      "types": "/core"
+      "types": "@tokis/core",
+      "import": "@tokis/core",
+      "require": "@tokis/core"
     },
     "./tokens": {
-      "require": "/tokens",
-      "import": "/tokens",
-      "types": "/tokens"
+      "types": "@tokis/tokens",
+      "import": "@tokis/tokens",
+      "require": "@tokis/tokens"
     }
   },
   "files": [
@@ -65,18 +65,18 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokis-design/tokis.git",
+    "url": "https://github.com/PrerakMathur20/TokisLib.git",
     "directory": "packages/tokis"
   },
-  "homepage": "https://tokis.dev",
+  "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
-    "url": "https://github.com/tokis-design/tokis/issues"
+    "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "dependencies": {
-    "/react": "^0.1.0",
-    "/theme": "^0.1.0",
-    "/core": "^0.1.0",
-    "/tokens": "^0.1.0"
+    "@tokis/react": "^1.0.9",
+    "@tokis/theme": "^1.0.9",
+    "@tokis/core": "^1.0.9",
+    "@tokis/tokens": "^1.0.9"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
