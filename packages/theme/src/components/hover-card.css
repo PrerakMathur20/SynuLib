@@ -13,8 +13,10 @@
 }
 
 @keyframes synu-hover-card-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  /* Use standalone 'translate' so it composes with the positioning
+     'transform' on the element instead of overriding it */
+  from { opacity: 0; translate: 0 4px; }
+  to   { opacity: 1; translate: 0 0; }
 }
 
 .synu-hover-card--top { transform-origin: bottom center; }
