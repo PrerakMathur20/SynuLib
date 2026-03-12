@@ -24,6 +24,7 @@ const PACKAGES = [
   'packages/core/package.json',
   'packages/theme/package.json',
   'packages/react/package.json',
+  'packages/icons/package.json',
   'packages/tokis/package.json',
 ];
 
