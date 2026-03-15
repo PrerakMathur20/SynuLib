@@ -55,7 +55,7 @@ npm install @tokis/theme
 
 - **Zero Runtime CSS** — No CSS-in-JS overhead. Precompiled static CSS.
 - **Token-Native** — Every value is a CSS custom property. Theming is predictable.
-- **Accessible by Default** — WAI-ARIA 1.2, keyboard navigation, focus management built-in.
+- **Designed for Accessibility** — Following WAI-ARIA Authoring Practices, targeting WCAG 2.2 Level AA. Keyboard navigation and focus management built-in.
 - **Composable** — Compound component patterns. No prop explosion.
 - **Dark Mode** — First-class light/dark support via `ThemeProvider`.
 - **TypeScript** — Full type safety with exported interfaces for every component.

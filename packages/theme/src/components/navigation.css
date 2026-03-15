@@ -40,7 +40,7 @@
 }
 .tokis-menu-item:focus-visible {
   background: var(--tokis-color-surface-hover);
-  outline: 2px solid var(--tokis-color-primary);
+  outline: 2px solid var(--tokis-color-focus-ring);
   outline-offset: -2px;
 }
 

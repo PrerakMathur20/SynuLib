@@ -1,6 +1,6 @@
 {
   "name": "@tokis/react",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "React adapter for Tokis — composable, accessible components, hooks, and theming context. Zero runtime CSS.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -8,9 +8,9 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/cjs/index.js"
     }
   },
   "files": [
@@ -60,17 +60,20 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "@tokis/core": "^1.2.2",
-    "@tokis/tokens": "^1.2.2",
-    "@tokis/theme": "^1.2.2"
+    "@tokis/core": "^1.2.3",
+    "@tokis/tokens": "^1.2.3",
+    "@tokis/theme": "^1.2.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "@tokis/core": "^1.1.0",
-    "@tokis/tokens": "^1.1.0"
+    "@tokis/core": "^1.2.3",
+    "@tokis/tokens": "^1.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",

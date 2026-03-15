@@ -1,6 +1,6 @@
 {
   "name": "@tokis/theme",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Default visual theme for Tokis — CSS variables, component styles, reset, and typography. Zero-runtime, precompiled CSS.",
   "exports": {
     ".": "./src/index.css",
@@ -61,6 +61,9 @@
   "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
     "url": "https://github.com/PrerakMathur20/TokisLib/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",

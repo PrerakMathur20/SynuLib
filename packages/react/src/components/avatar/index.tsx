@@ -60,14 +60,18 @@ export type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'erro
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
   dot?: boolean;
+  /** Text alternative for screen readers when using the dot indicator.
+   *  Required for WCAG 1.1.1 compliance when `dot={true}` conveys status information. */
+  dotLabel?: string;
 }
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({ variant = 'default', dot = false, className, children, ...props }, ref) => (
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(({ variant = 'default', dot = false, dotLabel, className, children, ...props }, ref) => (
   <span
     ref={ref}
     className={cn('tokis-badge', `tokis-badge--${variant}`, dot && 'tokis-badge--dot', className)}
     {...props}
   >
+    {dot && dotLabel && <span className="tokis-sr-only">{dotLabel}</span>}
     {children}
   </span>
 ));

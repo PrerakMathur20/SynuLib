@@ -96,12 +96,13 @@
   to   { transform: scale(1);   opacity: 1; }
 }
 
+/* Text colors use --tokis-badge-*-text vars which are calibrated per-theme for ≥4.5:1 contrast */
 .tokis-badge--default { background: var(--tokis-color-neutral-100); color: var(--tokis-text-secondary); }
-.tokis-badge--primary { background: var(--tokis-color-primary-subtle); color: var(--tokis-color-primary); }
-.tokis-badge--success { background: var(--tokis-color-success-subtle); color: var(--tokis-color-success); }
-.tokis-badge--warning { background: var(--tokis-color-warning-subtle); color: var(--tokis-color-warning); }
-.tokis-badge--error   { background: var(--tokis-color-error-subtle);   color: var(--tokis-color-error); }
-.tokis-badge--info    { background: var(--tokis-color-info-subtle);    color: var(--tokis-color-info); }
+.tokis-badge--primary { background: var(--tokis-color-primary-subtle); color: var(--tokis-badge-primary-text); }
+.tokis-badge--success { background: var(--tokis-color-success-subtle); color: var(--tokis-badge-success-text); }
+.tokis-badge--warning { background: var(--tokis-color-warning-subtle); color: var(--tokis-badge-warning-text); }
+.tokis-badge--error   { background: var(--tokis-color-error-subtle);   color: var(--tokis-badge-error-text); }
+.tokis-badge--info    { background: var(--tokis-color-info-subtle);    color: var(--tokis-badge-info-text); }
 
 .tokis-badge--solid-primary { background: var(--tokis-color-primary); color: var(--tokis-text-on-primary); }
 .tokis-badge--solid-success { background: var(--tokis-color-success); color: var(--tokis-text-inverse); }

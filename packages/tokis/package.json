@@ -1,6 +1,6 @@
 {
   "name": "@tokis/tokis",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Tokis Only Knows Its Styles — Performance-first, token-native UI design system for React. Install this package to get all Tokis packages: @tokis/react, @tokis/theme, @tokis/core, and @tokis/tokens.",
   "main": "./index.js",
   "module": "./index.mjs",
@@ -10,32 +10,6 @@
       "types": "./index.d.ts",
       "import": "./index.mjs",
       "require": "./index.js"
-    },
-    "./react": {
-      "types": "@tokis/react",
-      "import": "@tokis/react",
-      "require": "@tokis/react"
-    },
-    "./theme": "@tokis/theme",
-    "./core": {
-      "types": "@tokis/core",
-      "import": "@tokis/core",
-      "require": "@tokis/core"
-    },
-    "./tokens": {
-      "types": "@tokis/tokens",
-      "import": "@tokis/tokens",
-      "require": "@tokis/tokens"
-    },
-    "./icons": {
-      "types": "@tokis/icons",
-      "import": "@tokis/icons",
-      "require": "@tokis/icons"
-    },
-    "./icons/lucide": {
-      "types": "@tokis/icons/lucide",
-      "import": "@tokis/icons/lucide",
-      "require": "@tokis/icons/lucide"
     }
   },
   "files": [
@@ -45,7 +19,10 @@
     "README.md",
     "LICENSE"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "./index.js",
+    "./index.mjs"
+  ],
   "keywords": [
     "tokis",
     "design-system",
@@ -83,15 +60,23 @@
     "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "dependencies": {
-    "@tokis/react": "^1.2.2",
-    "@tokis/theme": "^1.2.2",
-    "@tokis/core": "^1.2.2",
-    "@tokis/tokens": "^1.2.2",
-    "@tokis/icons": "^1.2.2"
+    "@tokis/react": "^1.2.3",
+    "@tokis/theme": "^1.2.3",
+    "@tokis/core": "^1.2.3",
+    "@tokis/tokens": "^1.2.3",
+    "@tokis/icons": "^1.2.3"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": []
+    }
   },
   "publishConfig": {
     "access": "public",

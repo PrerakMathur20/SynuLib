@@ -1,5 +1,16 @@
-import React, { useId } from 'react';
+import React, { createContext, useContext, useId, useState } from 'react';
 import { cn } from '../../utils/cn.js';
+
+// Context lets RadioGroup pass state to Radio at any nesting depth —
+// fixing arrow-key nav for card/wrapper patterns where Radio isn't a direct child.
+interface RadioGroupContextValue {
+  name: string;
+  value?: string;
+  groupDisabled: boolean;
+  onChange?: (value: string) => void;
+}
+
+const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
 
 export interface RadioGroupProps {
   value?: string;
@@ -24,32 +35,42 @@ export interface RadioProps {
   className?: string;
 }
 
-export function Radio({ value, label, description, disabled = false, checked = false, name, onChange, className }: RadioProps) {
+export function Radio({ value, label, description, disabled = false, checked, name, onChange, className }: RadioProps) {
+  const ctx = useContext(RadioGroupContext);
   const autoId = useId();
   const radioId = `radio-${autoId}`;
   const descId = description ? `${radioId}-desc` : undefined;
 
+  // When inside a RadioGroup, use context values; otherwise fall back to own props.
+  const resolvedName = ctx?.name ?? name ?? '';
+  const resolvedChecked = ctx ? ctx.value === value : (checked ?? false);
+  const resolvedDisabled = ctx ? (ctx.groupDisabled || disabled) : disabled;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.checked) return;
+    if (ctx) { ctx.onChange?.(value); } else { onChange?.(value); }
+  };
+
   return (
     <label
       className={cn('tokis-radio-root', className)}
-      data-disabled={disabled || undefined}
+      data-disabled={resolvedDisabled || undefined}
       htmlFor={radioId}
     >
       <input
         type="radio"
         id={radioId}
-        name={name}
+        name={resolvedName}
         value={value}
-        checked={checked}
-        disabled={disabled}
-        onChange={(e) => e.target.checked && onChange?.(value)}
+        checked={resolvedChecked}
+        disabled={resolvedDisabled}
+        onChange={handleChange}
         className="tokis-radio-native"
         aria-describedby={descId}
       />
       <span
         aria-hidden="true"
         className="tokis-radio-control"
-        data-checked={checked ? 'true' : undefined}
+        data-checked={resolvedChecked ? 'true' : undefined}
       />
       {(label || description) && (
         <div>
@@ -61,26 +82,41 @@ export function Radio({ value, label, description, disabled = false, checked = f
   );
 }
 
-export function RadioGroup({ value, onChange, name, orientation = 'vertical', disabled = false, children, className, label }: RadioGroupProps) {
+export function RadioGroup({
+  value: controlledValue,
+  defaultValue,
+  onChange,
+  name,
+  orientation = 'vertical',
+  disabled = false,
+  children,
+  className,
+  label,
+}: RadioGroupProps) {
   const groupId = useId();
+  const resolvedName = name ?? groupId;
+
+  // Support uncontrolled usage via defaultValue
+  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const isControlled = controlledValue !== undefined;
+  const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const handleChange = (v: string) => {
+    if (!isControlled) setUncontrolledValue(v);
+    onChange?.(v);
+  };
+
   return (
-    <div
-      role="radiogroup"
-      aria-labelledby={label ? groupId : undefined}
-      aria-disabled={disabled}
-      className={cn('tokis-radio-group', orientation === 'horizontal' && 'tokis-radio-group--horizontal', className)}
-    >
-      {label && <span id={groupId} className="tokis-label" style={{ marginBottom: 'var(--tokis-spacing-1)' }}>{label}</span>}
-      {React.Children.map(children, (child) => {
-        if (!React.isValidElement(child)) return child;
-        const item = child as React.ReactElement<RadioProps>;
-        return React.cloneElement(item, {
-          name: name ?? groupId,
-          checked: value !== undefined ? item.props.value === value : item.props.checked,
-          disabled: disabled || item.props.disabled,
-          onChange: (v: string) => onChange?.(v),
-        });
-      })}
-    </div>
+    <RadioGroupContext.Provider value={{ name: resolvedName, value, groupDisabled: disabled, onChange: handleChange }}>
+      <div
+        role="radiogroup"
+        aria-labelledby={label ? groupId : undefined}
+        aria-disabled={disabled || undefined}
+        className={cn('tokis-radio-group', orientation === 'horizontal' && 'tokis-radio-group--horizontal', className)}
+      >
+        {label && <span id={groupId} className="tokis-label" style={{ marginBottom: 'var(--tokis-spacing-1)' }}>{label}</span>}
+        {children}
+      </div>
+    </RadioGroupContext.Provider>
   );
 }

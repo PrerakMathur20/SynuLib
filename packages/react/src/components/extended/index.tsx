@@ -156,6 +156,8 @@ export function Rating({ value = 0, max = 5, readOnly = false, onChange, size = 
             onClick={() => onChange?.(current)}
             onMouseEnter={() => !readOnly && setHovered(current)}
             onMouseLeave={() => !readOnly && setHovered(null)}
+            onFocus={() => !readOnly && setHovered(current)}
+            onBlur={() => !readOnly && setHovered(null)}
           >
             <svg
               viewBox="0 0 24 24"

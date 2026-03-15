@@ -62,7 +62,7 @@ for (const relPath of PACKAGES) {
   pkg.version = version;
 
   // Update cross-references to other @tokis/* packages
-  for (const depKey of ['dependencies', 'peerDependencies']) {
+  for (const depKey of ['dependencies', 'peerDependencies', 'devDependencies']) {
     if (!pkg[depKey]) continue;
     for (const name of Object.keys(pkg[depKey])) {
       if (TOKIS_SCOPE.test(name)) {

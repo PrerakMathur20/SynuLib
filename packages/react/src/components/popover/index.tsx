@@ -23,6 +23,7 @@ export function Popover({ trigger, content, title, placement = 'bottom-start', o
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const popoverId = useId();
 
   const setOpen = useCallback((val: boolean) => {
@@ -65,7 +66,28 @@ export function Popover({ trigger, content, title, placement = 'bottom-start', o
     return () => document.removeEventListener('keydown', h);
   }, [isOpen, closeOnEsc, setOpen]);
 
-  const handleToggle = () => { updatePosition(); setOpen(!isOpen); };
+  // Move focus into popover on open; restore it to the trigger on close
+  useEffect(() => {
+    if (isOpen) {
+      requestAnimationFrame(() => {
+        if (!contentRef.current) return;
+        const focusableSelectors = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const firstFocusable = contentRef.current.querySelector<HTMLElement>(focusableSelectors);
+        (firstFocusable ?? contentRef.current).focus();
+      });
+    } else if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+      previousFocusRef.current = null;
+    }
+  }, [isOpen]);
+
+  const handleToggle = () => {
+    if (!isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+    }
+    updatePosition();
+    setOpen(!isOpen);
+  };
 
   return (
     <>

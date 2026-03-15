@@ -2,19 +2,25 @@ import React, { forwardRef } from 'react';
 import { cn } from '../../utils/cn.js';
 
 // ─── Card ─────────────────────────────────────────────────
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   variant?: 'default' | 'elevated' | 'ghost';
   clickable?: boolean;
+  /** Override the rendered element. Defaults to `article` for non-clickable cards
+   *  (semantic grouping for screen readers) and `div` for clickable cards. */
+  as?: React.ElementType;
 }
-export const Card = forwardRef<HTMLDivElement, CardProps>(({ variant = 'default', clickable = false, className, children, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('tokis-card', variant !== 'default' && `tokis-card--${variant}`, clickable && 'tokis-card--clickable', className)}
-    role={clickable ? 'button' : undefined}
-    tabIndex={clickable ? 0 : undefined}
-    {...props}
-  >{children}</div>
-));
+export const Card = forwardRef<HTMLElement, CardProps>(({ variant = 'default', clickable = false, as: Tag, className, children, ...props }, ref) => {
+  const Component = Tag ?? (clickable ? 'div' : 'article');
+  return (
+    <Component
+      ref={ref}
+      className={cn('tokis-card', variant !== 'default' && `tokis-card--${variant}`, clickable && 'tokis-card--clickable', className)}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      {...props}
+    >{children}</Component>
+  );
+});
 Card.displayName = 'Card';
 
 export const CardHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (

@@ -49,8 +49,9 @@
   border-color: var(--tokis-color-primary);
 }
 
+/* Disabled prev/next navigation — exclude active page buttons which are styled separately */
 .tokis-pagination__item--disabled,
-.tokis-pagination__item:disabled {
+.tokis-pagination__item:disabled:not(.tokis-pagination__item--active) {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;

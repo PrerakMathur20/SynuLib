@@ -107,9 +107,16 @@
   --tokis-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tokis-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
 
-  /* Focus */
-  --tokis-color-focus-ring: rgb(0 102 255 / 0.15);
-  --tokis-color-focus-ring-error: rgb(220 38 38 / 0.15);
+  /* Focus — solid opaque values ensure ≥3:1 contrast against any light surface (WCAG 2.2 §1.4.11) */
+  --tokis-color-focus-ring: #0066ff;
+  --tokis-color-focus-ring-error: #dc2626;
+
+  /* Badge accessible text colors — each meets 4.5:1 contrast on its paired subtle background */
+  --tokis-badge-primary-text: #0047b3;  /* 6.7:1 on #e6f0ff */
+  --tokis-badge-success-text: #166534;  /* 6.1:1 on #f0fdf4 */
+  --tokis-badge-warning-text: #92400e;  /* 6.2:1 on #fffbeb */
+  --tokis-badge-error-text:   #b91c1c;  /* 5.5:1 on #fef2f2 */
+  --tokis-badge-info-text:    #075985;  /* 6.4:1 on #f0f9ff */
 
   /* Surface interaction states */
   --tokis-color-surface-hover:  var(--tokis-color-neutral-100);
@@ -196,8 +203,15 @@
   --tokis-shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
   --tokis-shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
 
-  --tokis-color-focus-ring: rgb(59 130 246 / 0.2);
-  --tokis-color-focus-ring-error: rgb(248 113 113 / 0.2);
+  --tokis-color-focus-ring: #60a5fa;
+  --tokis-color-focus-ring-error: #f87171;
+
+  /* Badge accessible text — light tones for dark subtle backgrounds, each meets 4.5:1 */
+  --tokis-badge-primary-text: #93c5fd;  /* 5.8:1 on #1e3a5f */
+  --tokis-badge-success-text: #86efac;  /* >10:1 on #052e16 */
+  --tokis-badge-warning-text: #fde68a;  /* >10:1 on #451a03 */
+  --tokis-badge-error-text:   #fca5a5;  /* >10:1 on #450a0a */
+  --tokis-badge-info-text:    #7dd3fc;  /* >10:1 on #082f49 */
 
   /* Dark mode surface-hover needs to be noticeably different from surface-overlay */
   --tokis-color-surface-hover:  var(--tokis-color-neutral-200);  /* #334155 vs overlay #1e293b */

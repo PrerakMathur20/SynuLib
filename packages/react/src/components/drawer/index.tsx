@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useId } from 'react';
 import { cn } from '../../utils/cn.js';
 import { Portal } from '../portal/index.js';
 import { trapFocus } from '@tokis/core';
@@ -20,6 +20,9 @@ export interface DrawerProps {
 
 export function Drawer({ open, onClose, side = 'right', title, description, children, footer, closeOnBackdrop = true, closeOnEsc = true, className }: DrawerProps) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const drawerId = useId();
+  const titleId = title ? `${drawerId}-title` : undefined;
+  const descId = description ? `${drawerId}-desc` : undefined;
 
   useEffect(() => {
     if (!open) return;
@@ -53,14 +56,16 @@ export function Drawer({ open, onClose, side = 'right', title, description, chil
         ref={contentRef}
         role="dialog"
         aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={descId}
         tabIndex={-1}
         className={cn(`tokis-drawer-content tokis-drawer-content--${side}`, className)}
         onClick={(e) => e.stopPropagation()}
       >
         {(title || description) && (
           <div className="tokis-drawer-header">
-            {title && <h2 className="tokis-drawer-title">{title}</h2>}
-            {description && <p className="tokis-drawer-description">{description}</p>}
+            {title && <h2 id={titleId} className="tokis-drawer-title">{title}</h2>}
+            {description && <p id={descId} className="tokis-drawer-description">{description}</p>}
             <button className="tokis-drawer-close" onClick={onClose} aria-label="Close drawer">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>

@@ -28,10 +28,13 @@ import {
 
 // ─── Shared floating panel hook ───────────────────────────────────────────────
 
+const FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 function useFloatingPanel(onClose?: () => void) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
 
   const updatePos = useCallback(() => {
@@ -45,6 +48,7 @@ function useFloatingPanel(onClose?: () => void) {
   }, []);
 
   const openPanel = () => {
+    previousFocusRef.current = document.activeElement as HTMLElement;
     updatePos();
     setOpen(true);
   };
@@ -52,8 +56,19 @@ function useFloatingPanel(onClose?: () => void) {
   const closePanel = useCallback(() => {
     setOpen(false);
     onClose?.();
-    triggerRef.current?.focus();
+    (previousFocusRef.current ?? triggerRef.current)?.focus();
+    previousFocusRef.current = null;
   }, [onClose]);
+
+  // Move focus into the panel when it opens so keyboard users can interact with it
+  useEffect(() => {
+    if (!open) return;
+    requestAnimationFrame(() => {
+      if (!panelRef.current) return;
+      const first = panelRef.current.querySelector<HTMLElement>(FOCUSABLE);
+      (first ?? panelRef.current).focus();
+    });
+  }, [open]);
 
   // Close on outside click
   useEffect(() => {
@@ -174,6 +189,7 @@ export function DatePicker({
             role="dialog"
             aria-modal="false"
             aria-label={label ?? 'Date picker'}
+            tabIndex={-1}
             style={{ top: pos.top, left: pos.left }}
           >
             <Calendar value={value} onChange={handleSelect} min={min} max={max} />

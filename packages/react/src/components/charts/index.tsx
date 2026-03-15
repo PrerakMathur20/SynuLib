@@ -56,6 +56,9 @@ export function BarChart({
   useEffect(() => { if (animated) setTimeout(() => setMounted(true), 50); }, [animated]);
 
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+  // Two ref arrays — one for vertical bars, one for horizontal bars (both must be called unconditionally)
+  const barRefs = useRef<(SVGRectElement | null)[]>([]);
+  const hBarRefs = useRef<(SVGRectElement | null)[]>([]);
 
   const maxVal = Math.max(...data.map((d) => d.value), 1);
   const padding = { top: 8, right: 8, bottom: 32, left: 40 };
@@ -66,11 +69,30 @@ export function BarChart({
   const barWidth = (chartW / data.length) * 0.6;
   const barGap = (chartW / data.length) * 0.4;
 
+  const handleBarKeyDown = (e: React.KeyboardEvent, i: number) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      barRefs.current[(i + 1) % data.length]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      barRefs.current[(i - 1 + data.length) % data.length]?.focus();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      barRefs.current[0]?.focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      barRefs.current[data.length - 1]?.focus();
+    }
+  };
+
+  const ariaLabel = `Bar chart showing: ${data.map((d) => `${d.label} ${d.value}`).join(', ')}`;
+
   if (!horizontal) {
     return (
       <div ref={containerRef} className={cn('tokis-chart tokis-chart--bar', className)}>
         <svg
-          width={w} height={h} aria-label="Bar chart"
+          width={w} height={h}
+          aria-label={ariaLabel}
           onMouseMove={(e) => {
             const svgRect = e.currentTarget.getBoundingClientRect();
             const mouseX = e.clientX - svgRect.left - padding.left;
@@ -99,19 +121,26 @@ export function BarChart({
               return (
                 <g key={i}>
                   <rect
+                    ref={(el) => { barRefs.current[i] = el; }}
                     x={x} y={y} width={barWidth}
                     height={mounted || !animated ? barH : 0}
                     fill={color} rx={3}
                     opacity={hoveredBar !== null && hoveredBar !== i ? 0.5 : 1}
-                    style={{ transition: animated ? 'y 0.6s ease, height 0.6s ease' : undefined }}
+                    style={{ transition: animated ? 'y 0.6s ease, height 0.6s ease' : undefined, outline: 'none' }}
+                    tabIndex={i === 0 ? 0 : -1}
+                    role="img"
+                    aria-label={`${d.label}: ${d.value}`}
+                    onFocus={() => setHoveredBar(i)}
+                    onBlur={() => setHoveredBar(null)}
+                    onKeyDown={(e) => handleBarKeyDown(e, i)}
                   />
-                  <text x={x + barWidth / 2} y={chartH + 18} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="middle">
+                  <text x={x + barWidth / 2} y={chartH + 18} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="middle" aria-hidden="true">
                     {d.label}
                   </text>
                 </g>
               );
             })}
-            {/* Hover tooltip */}
+            {/* Hover/focus tooltip */}
             {hoveredBar !== null && (() => {
               const d = data[hoveredBar];
               const x = hoveredBar * (chartW / data.length) + barGap / 2 + barWidth / 2;
@@ -120,7 +149,7 @@ export function BarChart({
               const txt = String(d.value);
               const tw = Math.max(36, txt.length * 7 + 16);
               return (
-                <g style={{ pointerEvents: 'none' }}>
+                <g style={{ pointerEvents: 'none' }} aria-hidden="true">
                   <rect x={x - tw / 2} y={tipY} width={tw} height={20} rx={4} fill="rgba(17,24,39,0.92)" />
                   <text x={x} y={tipY + 13} fontSize="10" textAnchor="middle" fill="#fff" fontWeight="600">{txt}</text>
                 </g>
@@ -133,25 +162,42 @@ export function BarChart({
   }
 
   // Horizontal
-  const barH = (chartH / data.length) * 0.6;
-  const barGapH = (chartH / data.length) * 0.4;
+  const hBarH = (chartH / data.length) * 0.6;
+  const hBarGap = (chartH / data.length) * 0.4;
+  const handleHBarKeyDown = (e: React.KeyboardEvent, i: number) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      hBarRefs.current[(i + 1) % data.length]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      hBarRefs.current[(i - 1 + data.length) % data.length]?.focus();
+    }
+  };
+
   return (
     <div ref={containerRef} className={cn('tokis-chart tokis-chart--bar', className)}>
-      <svg width={w} height={h} aria-label="Bar chart horizontal">
+      <svg width={w} height={h} aria-label={ariaLabel}>
         <g transform={`translate(${padding.left},${padding.top})`}>
           {data.map((d, i) => {
-            const y = i * (chartH / data.length) + barGapH / 2;
+            const y = i * (chartH / data.length) + hBarGap / 2;
             const barW = (d.value / maxVal) * chartW;
             const color = d.color ?? barColor ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length];
             return (
               <g key={i}>
-                <text x={-8} y={y + barH / 2 + 4} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="end">
+                <text x={-8} y={y + hBarH / 2 + 4} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="end" aria-hidden="true">
                   {d.label}
                 </text>
                 <rect
-                  x={0} y={y} width={mounted || !animated ? barW : 0} height={barH}
+                  ref={(el) => { hBarRefs.current[i] = el; }}
+                  x={0} y={y} width={mounted || !animated ? barW : 0} height={hBarH}
                   fill={color} rx={3}
-                  style={{ transition: animated ? 'width 0.6s ease' : undefined }}
+                  style={{ transition: animated ? 'width 0.6s ease' : undefined, outline: 'none' }}
+                  tabIndex={i === 0 ? 0 : -1}
+                  role="img"
+                  aria-label={`${d.label}: ${d.value}`}
+                  onFocus={() => setHoveredBar(i)}
+                  onBlur={() => setHoveredBar(null)}
+                  onKeyDown={(e) => handleHBarKeyDown(e, i)}
                 />
               </g>
             );
@@ -211,6 +257,7 @@ export function LineChart({
   const containerWidth = useContainerWidth(containerRef);
   const [mounted, setMounted] = useState(false);
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
+  const pointRefs = useRef<(SVGCircleElement | null)[][]>([]);
   useEffect(() => { if (animated) setTimeout(() => setMounted(true), 50); }, [animated]);
 
   const padding = { top: 12, right: 12, bottom: 32, left: 44 };
@@ -229,10 +276,31 @@ export function LineChart({
     y: chartH - ((val - minVal) / range) * chartH,
   });
 
+  const lineAriaLabel = `Line chart showing ${datasets.map((d) => d.label).join(' and ')} over ${labels.join(', ')}`;
+
+  const handlePointKeyDown = (e: React.KeyboardEvent, colIdx: number) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.min(colIdx + 1, labels.length - 1);
+      pointRefs.current[0]?.[next]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = Math.max(colIdx - 1, 0);
+      pointRefs.current[0]?.[prev]?.focus();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      pointRefs.current[0]?.[0]?.focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      pointRefs.current[0]?.[labels.length - 1]?.focus();
+    }
+  };
+
   return (
     <div ref={containerRef} className={cn('tokis-chart tokis-chart--line', className)}>
       <svg
-        width={w} height={h} aria-label="Line chart"
+        width={w} height={h}
+        aria-label={lineAriaLabel}
         onMouseMove={(e) => {
           const svgRect = e.currentTarget.getBoundingClientRect();
           const mouseX = e.clientX - svgRect.left - padding.left;
@@ -254,30 +322,47 @@ export function LineChart({
           ))}
           {/* X labels */}
           {labels.map((lbl, i) => (
-            <text key={i} x={toPoint(0, i).x} y={chartH + 18} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="middle">
+            <text key={i} x={toPoint(0, i).x} y={chartH + 18} fontSize="10" fill="var(--tokis-text-secondary)" textAnchor="middle" aria-hidden="true">
               {lbl}
             </text>
           ))}
-          {/* Lines */}
+          {/* Lines and keyboard-navigable data points */}
           {datasets.map((dataset, di) => {
             const points = dataset.data.map((v, i) => toPoint(v, i));
             const pathD = toPath(points, smooth);
             const color = dataset.color ?? DEFAULT_COLORS[di % DEFAULT_COLORS.length];
+            if (!pointRefs.current[di]) pointRefs.current[di] = [];
             return (
               <g key={di}>
                 <path
                   d={pathD} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  aria-hidden="true"
                   style={animated ? { strokeDasharray: 2000, strokeDashoffset: mounted ? 0 : 2000, transition: 'stroke-dashoffset 1s ease' } : undefined}
                 />
-                {points.map((p, pi) => (
-                  <circle key={pi} cx={p.x} cy={p.y} r={3} fill={color}
-                    style={animated ? { opacity: mounted ? 1 : 0, transition: `opacity 0.5s ease ${pi * 0.05}s` } : undefined}
-                  />
-                ))}
+                {points.map((p, pi) => {
+                  const isFirstDataset = di === 0;
+                  return (
+                    <circle
+                      key={pi}
+                      ref={(el) => { pointRefs.current[di][pi] = el; }}
+                      cx={p.x} cy={p.y} r={isFirstDataset ? 4 : 3}
+                      fill={color}
+                      style={{ outline: 'none', ...(animated ? { opacity: mounted ? 1 : 0, transition: `opacity 0.5s ease ${pi * 0.05}s` } : undefined) }}
+                      tabIndex={isFirstDataset ? (pi === 0 ? 0 : -1) : -1}
+                      role={isFirstDataset ? 'img' : undefined}
+                      aria-label={isFirstDataset
+                        ? `${labels[pi]}: ${datasets.map((ds) => `${ds.label} ${ds.data[pi]}`).join(', ')}`
+                        : undefined}
+                      onFocus={isFirstDataset ? () => setHoveredCol(pi) : undefined}
+                      onBlur={isFirstDataset ? () => setHoveredCol(null) : undefined}
+                      onKeyDown={isFirstDataset ? (e) => handlePointKeyDown(e, pi) : undefined}
+                    />
+                  );
+                })}
               </g>
             );
           })}
-          {/* Hover crosshair + tooltip */}
+          {/* Hover/focus crosshair + tooltip */}
           {hoveredCol !== null && (() => {
             const x = toPoint(0, hoveredCol).x;
             const vals = datasets.map((ds) => ({ val: ds.data[hoveredCol], color: ds.color ?? DEFAULT_COLORS[datasets.indexOf(ds) % DEFAULT_COLORS.length], label: ds.label }));
@@ -286,7 +371,7 @@ export function LineChart({
             const y = toPoint(firstVal.val, hoveredCol).y;
             const isMulti = vals.length > 1;
             return (
-              <g style={{ pointerEvents: 'none' }}>
+              <g style={{ pointerEvents: 'none' }} aria-hidden="true">
                 <line x1={x} x2={x} y1={0} y2={chartH} stroke="var(--tokis-color-border)" strokeWidth="1" strokeDasharray="3,3" />
                 {vals.map(({ val, color }, vi) => {
                   if (val === undefined) return null;
@@ -370,6 +455,7 @@ export function PieChart({
   const [mounted, setMounted] = useState(false);
   useEffect(() => { if (animated) setTimeout(() => setMounted(true), 50); }, [animated]);
   const [hovered, setHovered] = useState<number | null>(null);
+  const sliceRefs = useRef<(SVGPathElement | null)[]>([]);
 
   const total = data.reduce((s, d) => s + d.value, 0) || 1;
   const cx = size / 2;
@@ -406,15 +492,41 @@ export function PieChart({
     return { ...d, pathD, color: d.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length] };
   });
 
+  const pieAriaLabel = `${donut ? 'Donut' : 'Pie'} chart showing: ${data.map((d) => `${d.label} ${d.value} (${((d.value / total) * 100).toFixed(1)}%)`).join(', ')}`;
+
+  const handleSliceKeyDown = (e: React.KeyboardEvent, i: number) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      sliceRefs.current[(i + 1) % slices.length]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      sliceRefs.current[(i - 1 + slices.length) % slices.length]?.focus();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      sliceRefs.current[0]?.focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      sliceRefs.current[slices.length - 1]?.focus();
+    }
+  };
+
   return (
     <div className={cn('tokis-chart tokis-chart--pie', className)}>
-      <svg width={size} height={size} aria-label="Pie chart">
+      <svg width={size} height={size} aria-label={pieAriaLabel}>
         {slices.map((s, i) => (
           <path
-            key={i} d={s.pathD} fill={s.color}
-            style={{ opacity: mounted || !animated ? 1 : 0, transition: animated ? `opacity 0.4s ease ${i * 0.07}s` : undefined, cursor: 'pointer' }}
+            key={i}
+            ref={(el) => { sliceRefs.current[i] = el; }}
+            d={s.pathD} fill={s.color}
+            style={{ opacity: mounted || !animated ? 1 : 0, transition: animated ? `opacity 0.4s ease ${i * 0.07}s` : undefined, cursor: 'pointer', outline: 'none' }}
+            tabIndex={i === 0 ? 0 : -1}
+            role="img"
+            aria-label={`${s.label}: ${s.value} (${((s.value / total) * 100).toFixed(1)}%)`}
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
+            onFocus={() => setHovered(i)}
+            onBlur={() => setHovered(null)}
+            onKeyDown={(e) => handleSliceKeyDown(e, i)}
           >
             <title>{s.label}: {s.value} ({((s.value / total) * 100).toFixed(1)}%)</title>
           </path>

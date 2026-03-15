@@ -87,10 +87,9 @@ export function Pagination({
           <button
             key={`${item}-${index}`}
             className={cn('tokis-pagination__item', isActive && 'tokis-pagination__item--active')}
-            onClick={() => onChange(item)}
-            aria-label={`Go to page ${item}`}
+            onClick={isActive ? undefined : () => onChange(item)}
+            aria-label={isActive ? `Page ${item}, current page` : `Go to page ${item}`}
             aria-current={isActive ? 'page' : undefined}
-            disabled={isActive}
           >
             {item}
           </button>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useId } from 'react';
 import { cn } from '../../utils/cn.js';
 import { Portal } from '../portal/index.js';
 
@@ -36,6 +36,7 @@ export function HoverCard({
   const [positioned, setPositioned] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const anchorRef = useRef<HTMLElement>(null);
+  const cardId = useId();
   const openTimer = useRef<ReturnType<typeof setTimeout>>();
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -69,6 +70,7 @@ export function HoverCard({
     <>
       {React.cloneElement(trigger, {
         ref: anchorRef,
+        'aria-describedby': visible ? cardId : undefined,
         onMouseEnter: (...args: unknown[]) => {
           show();
           (trigger.props as React.HTMLAttributes<HTMLElement>).onMouseEnter?.(...(args as [React.MouseEvent<HTMLElement>]));
@@ -89,6 +91,8 @@ export function HoverCard({
       {visible && (
         <Portal>
           <div
+            id={cardId}
+            role="tooltip"
             className={cn('tokis-hover-card', `tokis-hover-card--${placement}`, className)}
             style={{
               position: 'fixed',

@@ -8,5 +8,11 @@
  *   @tokis/tokens  — Design token definitions (TypeScript + JSON)
  *   @tokis/icons   — Tree-shakable SVG icons with Lucide support
  */
+
+// CSS side-effect — must come before JS exports so styles are loaded first
+import '@tokis/theme';
+
 export * from '@tokis/react';
+export * from '@tokis/core';
+export * from '@tokis/tokens';
 export * from '@tokis/icons';

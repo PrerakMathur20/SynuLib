@@ -1,6 +1,6 @@
 {
   "name": "@tokis/core",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Framework-agnostic headless primitives for Tokis — state machines, accessibility helpers, and focus management. Zero dependencies.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -8,9 +8,9 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/cjs/index.js"
     }
   },
   "files": [
@@ -51,6 +51,9 @@
   "homepage": "https://github.com/PrerakMathur20/TokisLib#readme",
   "bugs": {
     "url": "https://github.com/PrerakMathur20/TokisLib/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",

@@ -26,3 +26,19 @@
 
 .tokis-box { display: block; }
 
+/* ── Screen-reader only utility ────────────────────────────── */
+
+/* Visually hides content while keeping it accessible to screen readers.
+   Use on elements that provide text alternatives for visual-only information
+   (e.g. dot badges, decorative icons, status indicators). */
+.tokis-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

@@ -1,6 +1,6 @@
 {
   "name": "@tokis/icons",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Icon library for Tokis — tree-shakable SVG icons with native lucide-react support.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -8,14 +8,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/cjs/index.js"
     },
     "./lucide": {
-      "require": "./dist/cjs/lucide.js",
+      "types": "./dist/lucide.d.ts",
       "import": "./dist/lucide.js",
-      "types": "./dist/lucide.d.ts"
+      "require": "./dist/cjs/lucide.js"
     }
   },
   "files": [
@@ -64,6 +64,9 @@
     "@types/react": "^18.0.0",
     "react": "^18.0.0",
     "lucide-react": "^0.300.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public",

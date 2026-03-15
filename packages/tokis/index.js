@@ -10,7 +10,12 @@
  */
 'use strict';
 
-const react = require('@tokis/react');
-const icons = require('@tokis/icons');
+// CSS side-effect
+require('@tokis/theme');
 
-module.exports = { ...react, ...icons };
+const react  = require('@tokis/react');
+const core   = require('@tokis/core');
+const tokens = require('@tokis/tokens');
+const icons  = require('@tokis/icons');
+
+module.exports = { ...react, ...core, ...tokens, ...icons };
