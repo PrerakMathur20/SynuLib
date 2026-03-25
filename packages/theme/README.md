@@ -44,7 +44,7 @@ import '@tokis/theme/components/dialog';
 
 ## Documentation
 
-Visit [tokis.dev](https://tokis.dev/docs/theming) for the theming guide.
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for the theming guide.
 
 ## License
 

@@ -1,6 +1,6 @@
 {
   "name": "@tokis/theme",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Default visual theme for Tokis — CSS variables, component styles, reset, and typography. Zero-runtime, precompiled CSS.",
   "exports": {
     ".": "./src/index.css",

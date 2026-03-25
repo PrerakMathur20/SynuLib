@@ -39,13 +39,13 @@ function App() {
 
 - `react` >= 18.0.0
 - `react-dom` >= 18.0.0
-- `@tokis/core` ^1.1.0
-- `@tokis/tokens` ^1.1.0
-- `@tokis/theme` ^1.1.0
+- `@tokis/core` ^1.3.0
+- `@tokis/tokens` ^1.3.0
+- `@tokis/theme` ^1.3.0
 
 ## Documentation
 
-Visit [tokis.dev](https://tokis.dev/docs/introduction) for interactive demos and full API reference.
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for interactive demos and full API reference.
 
 ## License
 

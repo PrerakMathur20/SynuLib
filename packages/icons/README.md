@@ -15,7 +15,7 @@ npm install @tokis/icons
 ### Built-in icons
 
 ```tsx
-import { SearchIcon, CloseIcon, ChevronDownIcon } from '@tokis/icons';
+import { SearchIcon, XIcon, ChevronDownIcon } from '@tokis/icons';
 
 function MyComponent() {
   return <SearchIcon aria-label="Search" />;
@@ -41,7 +41,7 @@ import { SearchIcon } from '@tokis/icons/lucide';
 
 ## Documentation
 
-Visit [tokis.dev](https://tokis.dev/docs/icons) for the full icon catalogue.
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for the full icon catalogue.
 
 ## License
 

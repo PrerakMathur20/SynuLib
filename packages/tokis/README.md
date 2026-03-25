@@ -63,7 +63,7 @@ npm install @tokis/theme
 
 ## Documentation
 
-Visit [tokis.dev](https://tokis.dev) for the full documentation, interactive demos, and API reference.
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for the full documentation, interactive demos, and API reference.
 
 ## License
 

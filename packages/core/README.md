@@ -14,7 +14,7 @@ npm install @tokis/core
 
 ```ts
 import {
-  createFocusTrap,
+  trapFocus,
   rovingTabIndex,
   generateId,
   createMachine,
@@ -23,7 +23,7 @@ import {
 
 ## What's Included
 
-- **Focus Management** — `createFocusTrap`, `rovingTabIndex`, `useFocusVisible`
+- **Focus Management** — `trapFocus`, `rovingTabIndex`, `useFocusVisible`
 - **Accessibility** — ARIA attribute helpers, unique ID generation
 - **State Machines** — Lightweight `createMachine` for component behavior
 - **Controllable State** — Unified controlled/uncontrolled state pattern
@@ -34,7 +34,7 @@ import {
 
 ## Documentation
 
-Visit [tokis.dev](https://tokis.dev) for the full documentation.
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for the full documentation.
 
 ## License
 

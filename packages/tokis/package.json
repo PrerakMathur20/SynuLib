@@ -1,6 +1,6 @@
 {
   "name": "@tokis/tokis",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Tokis Only Knows Its Styles — Performance-first, token-native UI design system for React. Install this package to get all Tokis packages: @tokis/react, @tokis/theme, @tokis/core, and @tokis/tokens.",
   "main": "./index.js",
   "module": "./index.mjs",
@@ -60,11 +60,11 @@
     "url": "https://github.com/PrerakMathur20/TokisLib/issues"
   },
   "dependencies": {
-    "@tokis/react": "^1.2.3",
-    "@tokis/theme": "^1.2.3",
-    "@tokis/core": "^1.2.3",
-    "@tokis/tokens": "^1.2.3",
-    "@tokis/icons": "^1.2.3"
+    "@tokis/react": "^1.3.0",
+    "@tokis/theme": "^1.3.0",
+    "@tokis/core": "^1.3.0",
+    "@tokis/tokens": "^1.3.0",
+    "@tokis/icons": "^1.3.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

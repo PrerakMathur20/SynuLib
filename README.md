@@ -52,15 +52,17 @@ export default function App() {
 
 ```
 @tokis/tokens ──┐
-                ├──▶ @tokis/react ──▶ @tokis/tokis
-@tokis/core   ──┘
-@tokis/theme ──────────────────────▶ @tokis/tokis
+                ├──▶ @tokis/react ──┐
+@tokis/core   ──┘                   ├──▶ @tokis/tokis
+@tokis/theme ───────────────────────┤
+@tokis/icons ───────────────────────┘
 ```
 
 - **tokens** — Pure TS/CSS. No framework dependencies.
 - **core** — Pure TS. No React. No styling. State machines, ARIA, focus traps.
 - **react** — Thin React adapter. Wraps core, consumes tokens via CSS variables.
 - **theme** — CSS only. Ships as a single compiled stylesheet.
+- **icons** — Tree-shakable SVG icon components, optional lucide-react bridge.
 - **tokis** — Meta package. No logic; just re-exports the above.
 
 ---
@@ -157,10 +159,17 @@ npm run publish:tokens
 npm run publish:core
 npm run publish:theme
 npm run publish:react
+npm run publish:icons
 npm run publish:tokis
 ```
 
 All packages have `publishConfig.access = "public"`.
+
+---
+
+## Documentation
+
+Visit [Tokis Documentation](https://prerakmathur20.github.io/TokisWebsite/) for the full documentation, interactive demos, and API reference.
 
 ---
 
